@@ -5,12 +5,39 @@ var ReactDOMRe = require("reason-react/src/ReactDOMRe.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var Slides$ReactTemplate = require("./Slides.bs.js");
 
-ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Slides$ReactTemplate.make(/* :: */[
-              "Slide 1",
-              /* :: */[
-                "Slide 2",
-                /* [] */0
-              ]
-            ], /* array */[])), "index1");
+var content = /* :: */[
+  /* :: */[
+    "Slide 1 Subcontent 1",
+    /* :: */[
+      "Slide 1 Subcontent 2",
+      /* [] */0
+    ]
+  ],
+  /* :: */[
+    /* :: */[
+      "Slide 2 Subconten 1",
+      /* [] */0
+    ],
+    /* :: */[
+      /* :: */[
+        "Slide 3 Subcontent 1",
+        /* :: */[
+          "Slide 3 Subcontent 2",
+          /* :: */[
+            "Slide 3 Subcontent 3",
+            /* :: */[
+              "Slide 3 Subcontent 4",
+              /* [] */0
+            ]
+          ]
+        ]
+      ],
+      /* [] */0
+    ]
+  ]
+];
 
+ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Slides$ReactTemplate.make(content, /* array */[])), "index1");
+
+exports.content = content;
 /*  Not a pure module */

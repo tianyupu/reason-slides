@@ -6,6 +6,8 @@ var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
+var Caml_primitive = require("bs-platform/lib/js/caml_primitive.js");
+var Slide$ReactTemplate = require("./Slide.bs.js");
 
 var component = ReasonReact.reducerComponent("Slides");
 
@@ -21,8 +23,8 @@ function make(content, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (self) {
-              var message = List.nth(content, self[/* state */1][/* currentSlide */0]);
-              return React.createElement("div", undefined, message, React.createElement("button", {
+              var slideContents = List.nth(content, self[/* state */1][/* currentSlide */0]);
+              return React.createElement("div", undefined, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, self[/* state */1][/* currentSlideContent */1], /* array */[])), React.createElement("button", {
                               onClick: (function (_event) {
                                   return Curry._1(self[/* send */3], /* PreviousSlide */0);
                                 })
@@ -33,14 +35,34 @@ function make(content, _children) {
                             }, ">"));
             }),
           /* initialState */(function (param) {
-              return /* record */[/* currentSlide */0];
+              return /* record */[
+                      /* currentSlide */0,
+                      /* currentSlideContent */0
+                    ];
             }),
           /* retainedProps */component[/* retainedProps */11],
           /* reducer */(function (action, state) {
               if (action) {
-                return /* Update */Block.__(0, [/* record */[/* currentSlide */state[/* currentSlide */0] + 1 | 0]]);
+                var match = state[/* currentSlideContent */1] >= (List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0);
+                var match$1 = state[/* currentSlide */0] === (List.length(content) - 1 | 0) && state[/* currentSlideContent */1] === (List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0);
+                var tmp;
+                if (match$1) {
+                  tmp = state[/* currentSlideContent */1];
+                } else {
+                  var match$2 = state[/* currentSlideContent */1] >= (List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0);
+                  tmp = Caml_primitive.caml_int_min(match$2 ? 0 : state[/* currentSlideContent */1] + 1 | 0, List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0);
+                }
+                return /* Update */Block.__(0, [/* record */[
+                            /* currentSlide */Caml_primitive.caml_int_min(match ? state[/* currentSlide */0] + 1 | 0 : state[/* currentSlide */0], List.length(content) - 1 | 0),
+                            /* currentSlideContent */tmp
+                          ]]);
               } else {
-                return /* Update */Block.__(0, [/* record */[/* currentSlide */state[/* currentSlide */0] - 1 | 0]]);
+                var match$3 = state[/* currentSlideContent */1] <= 0;
+                var match$4 = state[/* currentSlideContent */1] <= 0;
+                return /* Update */Block.__(0, [/* record */[
+                            /* currentSlide */Caml_primitive.caml_int_max(match$3 ? state[/* currentSlide */0] - 1 | 0 : state[/* currentSlide */0], 0),
+                            /* currentSlideContent */Caml_primitive.caml_int_max(match$4 ? 0 : state[/* currentSlideContent */1] - 1 | 0, 0)
+                          ]]);
               }
             }),
           /* jsElementWrapped */component[/* jsElementWrapped */13]

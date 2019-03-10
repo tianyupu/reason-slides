@@ -1,5 +1,6 @@
 type state = {
     currentSlide: int,
+    currentSlideContent: int,
 };
 
 type action =
@@ -15,20 +16,39 @@ let make = (~content, _children) => {
   /* spread the other default fields of component here and override a few */
   ...component,
 
-  initialState: () => { currentSlide: 0, },
+  initialState: () => { 
+    currentSlide: 0,
+    currentSlideContent: 0,
+  },
 
-  /* State transitions */
   reducer: (action, state) =>
     switch (action) {
-    | PreviousSlide => ReasonReact.Update({currentSlide: state.currentSlide - 1})
-    | NextSlide => ReasonReact.Update({currentSlide: state.currentSlide + 1})
-    },
+    | PreviousSlide => ReasonReact.Update({
+        currentSlide: max(state.currentSlideContent <= 0
+          ? state.currentSlide - 1
+          : state.currentSlide, 0),
+        currentSlideContent: max(state.currentSlideContent <= 0
+          ? 0
+          : state.currentSlideContent - 1, 0),
+      })
+    | NextSlide => ReasonReact.Update({
+        currentSlide: min(state.currentSlideContent >= List.length(List.nth(content, state.currentSlide)) - 1
+          ? state.currentSlide + 1
+          : state.currentSlide, List.length(content) - 1),
+        currentSlideContent: state.currentSlide == List.length(content) - 1
+                              && state.currentSlideContent == List.length(List.nth(content, state.currentSlide)) - 1
+                              ? state.currentSlideContent
+                              : min(state.currentSlideContent >= List.length(List.nth(content, state.currentSlide)) - 1
+                                ? 0
+                                : state.currentSlideContent + 1, List.length(List.nth(content, state.currentSlide)) - 1),
+        })
+      },
 
   render: self => {
-    let message =
+    let slideContents: list(string) =
       List.nth(content, self.state.currentSlide);
     <div>
-      {ReasonReact.string(message)}
+      <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
       <button onClick={_event => self.send(PreviousSlide)}>
         {ReasonReact.string("<")}
       </button>
