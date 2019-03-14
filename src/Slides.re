@@ -12,7 +12,7 @@ let component = ReasonReact.reducerComponent("Slides");
 
 /* greeting and children are props. `children` isn't used, therefore ignored.
    We ignore it by prepending it with an underscore */
-let make = (~content, _children) => {
+let make = (~content, ~isLoading, _children) => {
   /* spread the other default fields of component here and override a few */
   ...component,
 
@@ -45,16 +45,18 @@ let make = (~content, _children) => {
       },
 
   render: self => {
-    let slideContents: list(string) =
+    let slideContents: list(string) = 
       List.nth(content, self.state.currentSlide);
-    <div>
-      <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
-      <button onClick={_event => self.send(PreviousSlide)}>
-        {ReasonReact.string("<")}
-      </button>
-      <button onClick={_event => self.send(NextSlide)}>
-        {ReasonReact.string(">")}
-      </button>
-    </div>;
+    isLoading
+    ? <h1>{ReasonReact.string("Loading slides...")}</h1>
+    : <div>
+        <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
+        <button onClick={_event => self.send(PreviousSlide)}>
+          {ReasonReact.string("<")}
+        </button>
+        <button onClick={_event => self.send(NextSlide)}>
+          {ReasonReact.string(">")}
+        </button>
+      </div>;
   },
 };

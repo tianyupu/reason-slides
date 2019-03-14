@@ -11,7 +11,7 @@ var Slide$ReactTemplate = require("./Slide.bs.js");
 
 var component = ReasonReact.reducerComponent("Slides");
 
-function make(content, _children) {
+function make(content, isLoading, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -24,15 +24,19 @@ function make(content, _children) {
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (self) {
               var slideContents = List.nth(content, self[/* state */1][/* currentSlide */0]);
-              return React.createElement("div", undefined, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, self[/* state */1][/* currentSlideContent */1], /* array */[])), React.createElement("button", {
-                              onClick: (function (_event) {
-                                  return Curry._1(self[/* send */3], /* PreviousSlide */0);
-                                })
-                            }, "<"), React.createElement("button", {
-                              onClick: (function (_event) {
-                                  return Curry._1(self[/* send */3], /* NextSlide */1);
-                                })
-                            }, ">"));
+              if (isLoading) {
+                return React.createElement("h1", undefined, "Loading slides...");
+              } else {
+                return React.createElement("div", undefined, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, self[/* state */1][/* currentSlideContent */1], /* array */[])), React.createElement("button", {
+                                onClick: (function (_event) {
+                                    return Curry._1(self[/* send */3], /* PreviousSlide */0);
+                                  })
+                              }, "<"), React.createElement("button", {
+                                onClick: (function (_event) {
+                                    return Curry._1(self[/* send */3], /* NextSlide */1);
+                                  })
+                              }, ">"));
+              }
             }),
           /* initialState */(function (param) {
               return /* record */[

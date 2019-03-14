@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const outputDir = path.join(__dirname, 'build/');
 
@@ -15,7 +16,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       inject: false
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: './src/slide-content.md', to: outputDir }
+    ])
   ],
   devServer: {
     compress: true,

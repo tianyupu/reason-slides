@@ -1,15 +1,12 @@
-let content = [
-  ["# Slide 1", "Subcontent 1"],
-  ["# Slide 2"],
-  ["# Slide 3", "_Subcontent_ 1", "**Subcontent** 2", "## Subcontent 3", "Subcontent 4"],
-];
+let slideSeparator = "\n---\n";
+let slideContentSeparator = "\n";
 
-// Js.Promise.(
-//   Fetch.fetch("/slide-content.md")
-//   |> then_(Fetch.Response.text)
-//   |> then_(text => Str.split(regexp("---"), text))
-//   |> then_(text => print_endline(List.nth(0, text)))
-//   |> resolve)
-// );
+ReactDOMRe.renderToElementWithId(<Slides isLoading={true} content={[[]]} />, "index1");
 
-ReactDOMRe.renderToElementWithId(<Slides content={content}/>, "index1");
+Js.Promise.(
+  Fetch.fetch("slide-content.md")
+  |> then_(Fetch.Response.text)
+  |> then_(text => Array.to_list(Js.String.split(slideSeparator, text)) |> resolve)
+  |> then_(slideArray => List.map(slide => Array.to_list(Js.String.split(slideContentSeparator, slide)), slideArray) |> resolve)
+  |> then_(slideContent => ReactDOMRe.renderToElementWithId(<Slides isLoading={false} content={slideContent} />, "index1") |> resolve)
+);
