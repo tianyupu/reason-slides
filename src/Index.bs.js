@@ -7,27 +7,30 @@ var Slides$ReactTemplate = require("./Slides.bs.js");
 
 var content = /* :: */[
   /* :: */[
-    "Slide 1 Subcontent 1",
+    "# Slide 1",
     /* :: */[
-      "Slide 1 Subcontent 2",
+      "Subcontent 1",
       /* [] */0
     ]
   ],
   /* :: */[
     /* :: */[
-      "Slide 2 Subconten 1",
+      "# Slide 2",
       /* [] */0
     ],
     /* :: */[
       /* :: */[
-        "Slide 3 Subcontent 1",
+        "# Slide 3",
         /* :: */[
-          "Slide 3 Subcontent 2",
+          "_Subcontent_ 1",
           /* :: */[
-            "Slide 3 Subcontent 3",
+            "**Subcontent** 2",
             /* :: */[
-              "Slide 3 Subcontent 4",
-              /* [] */0
+              "## Subcontent 3",
+              /* :: */[
+                "Subcontent 4",
+                /* [] */0
+              ]
             ]
           ]
         ]

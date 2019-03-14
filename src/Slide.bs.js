@@ -5,13 +5,14 @@ var List = require("bs-platform/lib/js/list.js");
 var $$Array = require("bs-platform/lib/js/array.js");
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
+var Markdown$ReactTemplate = require("./Markdown.bs.js");
 
 var component = ReasonReact.statelessComponent("Slide");
 
 var style = {
   backgroundColor: "#cccccc",
-  height: "300px",
-  width: "400px"
+  height: "450px",
+  width: "800px"
 };
 
 function make(content, currentContentIndex, _children) {
@@ -29,7 +30,7 @@ function make(content, currentContentIndex, _children) {
               var slides = List.mapi((function (i, s) {
                       var match = i <= currentContentIndex;
                       if (match) {
-                        return React.createElement("p", undefined, s);
+                        return ReasonReact.element(undefined, undefined, Markdown$ReactTemplate.make(s, /* array */[]));
                       } else {
                         return React.createElement("p", undefined);
                       }
