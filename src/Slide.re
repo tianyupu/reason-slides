@@ -11,10 +11,18 @@ let style = ReactDOMRe.Style.make(
     ()
 );
 
+let contentStyle = (~isHidden=false) => ReactDOMRe.Style.make(
+    ~visibility={isHidden ? "hidden" : "visible"},
+    ()
+);
+
 let make = (~content: list(string), ~currentContentIndex: int, _children) => {
     ...component,
     render: _self => {
-        let slides = List.mapi((i, s) => i <= currentContentIndex ? <Markdown markdown={s} /> : ReasonReact.null, content);
+        let slides = 
+            List.mapi((i, s) => 
+                <div style={contentStyle(~isHidden={i > currentContentIndex})}><Markdown markdown={s} /></div>
+            , content);
         <div style>
             {ReasonReact.array(Array.of_list(slides))}
         </div>;

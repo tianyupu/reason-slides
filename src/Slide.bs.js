@@ -19,6 +19,13 @@ var style = {
   justifyContent: "center"
 };
 
+function contentStyle($staropt$star) {
+  var isHidden = $staropt$star !== undefined ? $staropt$star : false;
+  return {
+          visibility: isHidden ? "hidden" : "visible"
+        };
+}
+
 function make(content, currentContentIndex, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
@@ -32,12 +39,9 @@ function make(content, currentContentIndex, _children) {
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (_self) {
               var slides = List.mapi((function (i, s) {
-                      var match = i <= currentContentIndex;
-                      if (match) {
-                        return ReasonReact.element(undefined, undefined, Markdown$ReactTemplate.make(s, /* array */[]));
-                      } else {
-                        return null;
-                      }
+                      return React.createElement("div", {
+                                  style: contentStyle(i > currentContentIndex)
+                                }, ReasonReact.element(undefined, undefined, Markdown$ReactTemplate.make(s, /* array */[])));
                     }), content);
               return React.createElement("div", {
                           style: style
@@ -52,5 +56,6 @@ function make(content, currentContentIndex, _children) {
 
 exports.component = component;
 exports.style = style;
+exports.contentStyle = contentStyle;
 exports.make = make;
 /* component Not a pure module */
