@@ -28,7 +28,7 @@ function make(markdown, _children) {
                             }
                           });
               } else {
-                return React.createElement("div", undefined);
+                return null;
               }
             }),
           /* initialState */(function (param) {

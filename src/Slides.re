@@ -10,6 +10,43 @@ type action =
 
 let component = ReasonReact.reducerComponent("Slides");
 
+let style = ReactDOMRe.Style.make(
+    ~width="100%",
+    ~height="100%",
+    ~position="relative",
+    ~overflow="hidden",
+    ~backgroundColor="#eba6f4",
+    ()
+);
+
+let controlsStyle = ReactDOMRe.Style.make(
+    ~position="fixed",
+    ~right="10px",
+    ~bottom="20px",
+    ()
+);
+
+let leftControlStyle = ReactDOMRe.Style.make(
+    ~borderRightColor="#777",
+    ~borderRightWidth="22px",
+    ~padding="0",
+    ~backgroundColor="transparent",
+    ~border="12px solid transparent",
+    ~cursor="pointer",
+    ~margin="0 5px 0 5px",
+    ()
+);
+let rightControlStyle = ReactDOMRe.Style.make(
+    ~borderLeftColor="#777",
+    ~borderLeftWidth="22px",
+    ~padding="0",
+    ~backgroundColor="transparent",
+    ~border="12px solid transparent",
+    ~cursor="pointer",
+    ~margin="0 5px 0 5px",
+    ()
+);
+
 /* greeting and children are props. `children` isn't used, therefore ignored.
    We ignore it by prepending it with an underscore */
 let make = (~content, ~isLoading, _children) => {
@@ -49,14 +86,12 @@ let make = (~content, ~isLoading, _children) => {
       List.nth(content, self.state.currentSlide);
     isLoading
     ? <h1>{ReasonReact.string("Loading slides...")}</h1>
-    : <div>
+    : <div style>
         <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
-        <button onClick={_event => self.send(PreviousSlide)}>
-          {ReasonReact.string("<")}
-        </button>
-        <button onClick={_event => self.send(NextSlide)}>
-          {ReasonReact.string(">")}
-        </button>
+        <aside style={controlsStyle}>
+          <button onClick={_event => self.send(PreviousSlide)} style={leftControlStyle}></button>
+          <button onClick={_event => self.send(NextSlide)} style={rightControlStyle}></button>
+        </aside>
       </div>;
   },
 };

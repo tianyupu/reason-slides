@@ -17,7 +17,7 @@ let make = (~markdown, _children) => {
     reducer: (_action: action, _state) => { ReasonReact.NoUpdate },
     render: self => {
         switch(self.state.converter^) {
-            | None            => <div></div>
+            | None            => ReasonReact.null
             | Some(converter) => 
                 <div dangerouslySetInnerHTML={{ "__html": converter##makeHtml(markdown) }} />
         }

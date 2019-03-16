@@ -10,9 +10,13 @@ var Markdown$ReactTemplate = require("./Markdown.bs.js");
 var component = ReasonReact.statelessComponent("Slide");
 
 var style = {
-  backgroundColor: "#cccccc",
-  height: "450px",
-  width: "800px"
+  display: "flex",
+  height: "90%",
+  margin: "auto",
+  textAlign: "center",
+  width: "90%",
+  flexDirection: "column",
+  justifyContent: "center"
 };
 
 function make(content, currentContentIndex, _children) {
@@ -32,7 +36,7 @@ function make(content, currentContentIndex, _children) {
                       if (match) {
                         return ReasonReact.element(undefined, undefined, Markdown$ReactTemplate.make(s, /* array */[]));
                       } else {
-                        return React.createElement("p", undefined);
+                        return null;
                       }
                     }), content);
               return React.createElement("div", {

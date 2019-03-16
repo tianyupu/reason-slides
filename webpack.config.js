@@ -18,7 +18,8 @@ module.exports = {
       inject: false
     }),
     new CopyWebpackPlugin([
-      { from: './src/slide-content.md', to: outputDir }
+      { from: './src/slide-content.md', to: outputDir },
+      { from: './src/index.css', to: outputDir }
     ])
   ],
   devServer: {

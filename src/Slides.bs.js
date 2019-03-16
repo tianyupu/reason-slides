@@ -11,6 +11,40 @@ var Slide$ReactTemplate = require("./Slide.bs.js");
 
 var component = ReasonReact.reducerComponent("Slides");
 
+var style = {
+  backgroundColor: "#eba6f4",
+  height: "100%",
+  overflow: "hidden",
+  position: "relative",
+  width: "100%"
+};
+
+var controlsStyle = {
+  bottom: "20px",
+  position: "fixed",
+  right: "10px"
+};
+
+var leftControlStyle = {
+  backgroundColor: "transparent",
+  border: "12px solid transparent",
+  borderRightColor: "#777",
+  borderRightWidth: "22px",
+  cursor: "pointer",
+  margin: "0 5px 0 5px",
+  padding: "0"
+};
+
+var rightControlStyle = {
+  backgroundColor: "transparent",
+  border: "12px solid transparent",
+  borderLeftColor: "#777",
+  borderLeftWidth: "22px",
+  cursor: "pointer",
+  margin: "0 5px 0 5px",
+  padding: "0"
+};
+
 function make(content, isLoading, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
@@ -27,15 +61,21 @@ function make(content, isLoading, _children) {
               if (isLoading) {
                 return React.createElement("h1", undefined, "Loading slides...");
               } else {
-                return React.createElement("div", undefined, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, self[/* state */1][/* currentSlideContent */1], /* array */[])), React.createElement("button", {
-                                onClick: (function (_event) {
-                                    return Curry._1(self[/* send */3], /* PreviousSlide */0);
-                                  })
-                              }, "<"), React.createElement("button", {
-                                onClick: (function (_event) {
-                                    return Curry._1(self[/* send */3], /* NextSlide */1);
-                                  })
-                              }, ">"));
+                return React.createElement("div", {
+                            style: style
+                          }, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, self[/* state */1][/* currentSlideContent */1], /* array */[])), React.createElement("aside", {
+                                style: controlsStyle
+                              }, React.createElement("button", {
+                                    style: leftControlStyle,
+                                    onClick: (function (_event) {
+                                        return Curry._1(self[/* send */3], /* PreviousSlide */0);
+                                      })
+                                  }), React.createElement("button", {
+                                    style: rightControlStyle,
+                                    onClick: (function (_event) {
+                                        return Curry._1(self[/* send */3], /* NextSlide */1);
+                                      })
+                                  })));
               }
             }),
           /* initialState */(function (param) {
@@ -74,5 +114,9 @@ function make(content, isLoading, _children) {
 }
 
 exports.component = component;
+exports.style = style;
+exports.controlsStyle = controlsStyle;
+exports.leftControlStyle = leftControlStyle;
+exports.rightControlStyle = rightControlStyle;
 exports.make = make;
 /* component Not a pure module */
