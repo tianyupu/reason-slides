@@ -19,7 +19,8 @@
   "namespace": true,
   "bs-dependencies": [
     "reason-react",
-    "bs-fetch"
+    "bs-fetch",
+    "bs-webapi"
   ],
   "refmt": 3
 }

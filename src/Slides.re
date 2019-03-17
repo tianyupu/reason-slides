@@ -1,6 +1,7 @@
 type state = {
     currentSlide: int,
     currentSlideContent: int,
+    keyDownHandler: ref(Dom.keyboardEvent => unit),
 };
 
 type action =
@@ -47,20 +48,38 @@ let rightControlStyle = ReactDOMRe.Style.make(
     ()
 );
 
-/* greeting and children are props. `children` isn't used, therefore ignored.
-   We ignore it by prepending it with an underscore */
 let make = (~content, ~isLoading, _children) => {
-  /* spread the other default fields of component here and override a few */
   ...component,
 
   initialState: () => { 
     currentSlide: 0,
     currentSlideContent: 0,
+    keyDownHandler: ref(_e => ()),
+  },
+
+  didMount: self => {
+    self.state.keyDownHandler := e => (switch (KeyboardEventRe.key(e)) {
+        | "ArrowLeft" => self.send(PreviousSlide)
+        | "ArrowRight" => self.send(NextSlide)
+        | _ => ()
+      });
+    EventTargetRe.addKeyDownEventListener(
+      self.state.keyDownHandler^,
+      DocumentRe.asEventTarget(Webapi.Dom.document)
+    );
+  },
+
+  willUnmount: self => {
+    EventTargetRe.removeKeyDownEventListener(
+      self.state.keyDownHandler^,
+      DocumentRe.asEventTarget(Webapi.Dom.document)
+    );
   },
 
   reducer: (action, state) =>
     switch (action) {
     | PreviousSlide => ReasonReact.Update({
+        ...state,
         currentSlide: max(state.currentSlideContent <= 0
           ? state.currentSlide - 1
           : state.currentSlide, 0),
@@ -69,6 +88,7 @@ let make = (~content, ~isLoading, _children) => {
           : state.currentSlideContent - 1, 0),
       })
     | NextSlide => ReasonReact.Update({
+        ...state,
         currentSlide: min(state.currentSlideContent >= List.length(List.nth(content, state.currentSlide)) - 1
           ? state.currentSlide + 1
           : state.currentSlide, List.length(content) - 1),

@@ -51,9 +51,26 @@ function make(content, isLoading, _children) {
           /* reactClassInternal */component[/* reactClassInternal */1],
           /* handedOffState */component[/* handedOffState */2],
           /* willReceiveProps */component[/* willReceiveProps */3],
-          /* didMount */component[/* didMount */4],
+          /* didMount */(function (self) {
+              self[/* state */1][/* keyDownHandler */2][0] = (function (e) {
+                  var match = e.key;
+                  switch (match) {
+                    case "ArrowLeft" : 
+                        return Curry._1(self[/* send */3], /* PreviousSlide */0);
+                    case "ArrowRight" : 
+                        return Curry._1(self[/* send */3], /* NextSlide */1);
+                    default:
+                      return /* () */0;
+                  }
+                });
+              document.addEventListener("keydown", self[/* state */1][/* keyDownHandler */2][0]);
+              return /* () */0;
+            }),
           /* didUpdate */component[/* didUpdate */5],
-          /* willUnmount */component[/* willUnmount */6],
+          /* willUnmount */(function (self) {
+              document.removeEventListener("keydown", self[/* state */1][/* keyDownHandler */2][0]);
+              return /* () */0;
+            }),
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (self) {
@@ -81,7 +98,10 @@ function make(content, isLoading, _children) {
           /* initialState */(function (param) {
               return /* record */[
                       /* currentSlide */0,
-                      /* currentSlideContent */0
+                      /* currentSlideContent */0,
+                      /* keyDownHandler : record */[/* contents */(function (_e) {
+                            return /* () */0;
+                          })]
                     ];
             }),
           /* retainedProps */component[/* retainedProps */11],
@@ -98,14 +118,16 @@ function make(content, isLoading, _children) {
                 }
                 return /* Update */Block.__(0, [/* record */[
                             /* currentSlide */Caml_primitive.caml_int_min(match ? state[/* currentSlide */0] + 1 | 0 : state[/* currentSlide */0], List.length(content) - 1 | 0),
-                            /* currentSlideContent */tmp
+                            /* currentSlideContent */tmp,
+                            /* keyDownHandler */state[/* keyDownHandler */2]
                           ]]);
               } else {
                 var match$3 = state[/* currentSlideContent */1] <= 0;
                 var match$4 = state[/* currentSlideContent */1] <= 0;
                 return /* Update */Block.__(0, [/* record */[
                             /* currentSlide */Caml_primitive.caml_int_max(match$3 ? state[/* currentSlide */0] - 1 | 0 : state[/* currentSlide */0], 0),
-                            /* currentSlideContent */Caml_primitive.caml_int_max(match$4 ? 0 : state[/* currentSlideContent */1] - 1 | 0, 0)
+                            /* currentSlideContent */Caml_primitive.caml_int_max(match$4 ? 0 : state[/* currentSlideContent */1] - 1 | 0, 0),
+                            /* keyDownHandler */state[/* keyDownHandler */2]
                           ]]);
               }
             }),
