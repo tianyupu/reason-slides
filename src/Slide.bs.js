@@ -19,8 +19,7 @@ var style = {
   justifyContent: "center"
 };
 
-function contentStyle($staropt$star) {
-  var isHidden = $staropt$star !== undefined ? $staropt$star : false;
+function contentStyle(isHidden) {
   return {
           visibility: isHidden ? "hidden" : "visible"
         };

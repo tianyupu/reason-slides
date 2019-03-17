@@ -11,7 +11,7 @@ let style = ReactDOMRe.Style.make(
     ()
 );
 
-let contentStyle = (~isHidden=false) => ReactDOMRe.Style.make(
+let contentStyle = (~isHidden) => ReactDOMRe.Style.make(
     ~visibility={isHidden ? "hidden" : "visible"},
     ()
 );
