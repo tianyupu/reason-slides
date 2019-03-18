@@ -13,6 +13,9 @@ let style = ReactDOMRe.Style.make(
 
 let contentStyle = (~isHidden) => ReactDOMRe.Style.make(
     ~visibility={isHidden ? "hidden" : "visible"},
+    ~display="flex",
+    ~justifyContent="center",
+    ~alignItems="center",
     ()
 );
 

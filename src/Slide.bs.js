@@ -21,7 +21,10 @@ var style = {
 
 function contentStyle(isHidden) {
   return {
-          visibility: isHidden ? "hidden" : "visible"
+          display: "flex",
+          visibility: isHidden ? "hidden" : "visible",
+          alignItems: "center",
+          justifyContent: "center"
         };
 }
 

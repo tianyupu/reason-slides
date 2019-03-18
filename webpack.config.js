@@ -2,6 +2,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const outputDir = path.join(__dirname, 'build/');
+const imageOutputDir = path.join(outputDir, 'img/');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -19,7 +20,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: './src/slide-content.md', to: outputDir },
-      { from: './src/index.css', to: outputDir }
+      { from: './src/index.css', to: outputDir },
+      { from: './src/img/', to: imageOutputDir }
     ])
   ],
   devServer: {
