@@ -78,28 +78,40 @@ let make = (~content, ~isLoading, _children) => {
 
   reducer: (action, state) =>
     switch (action) {
-    | PreviousSlide => ReasonReact.Update({
-        ...state,
-        currentSlide: max(state.currentSlideContent <= 0
-          ? state.currentSlide - 1
-          : state.currentSlide, 0),
-        currentSlideContent: max(state.currentSlideContent <= 0
-          ? 0
-          : state.currentSlideContent - 1, 0),
-      })
-    | NextSlide => ReasonReact.Update({
-        ...state,
-        currentSlide: min(state.currentSlideContent >= List.length(List.nth(content, state.currentSlide)) - 1
-          ? state.currentSlide + 1
-          : state.currentSlide, List.length(content) - 1),
-        currentSlideContent: state.currentSlide == List.length(content) - 1
-                              && state.currentSlideContent == List.length(List.nth(content, state.currentSlide)) - 1
-                              ? state.currentSlideContent
-                              : min(state.currentSlideContent >= List.length(List.nth(content, state.currentSlide)) - 1
+    | PreviousSlide => {
+        let lastContentOnPreviousSlide = state.currentSlide > 0
+          ? List.length(List.nth(content, state.currentSlide-1)) - 1
+          : -1 ;
+        ReasonReact.Update({
+          ...state,
+          currentSlide: max(state.currentSlideContent <= 0
+            ? state.currentSlide - 1
+            : state.currentSlide, 0),
+          currentSlideContent: state.currentSlideContent <= 0
+                                && state.currentSlide <= 0
                                 ? 0
-                                : state.currentSlideContent + 1, List.length(List.nth(content, state.currentSlide)) - 1),
-        })
-      },
+                                : max(state.currentSlideContent <= 0
+                                    ? lastContentOnPreviousSlide
+                                    : state.currentSlideContent - 1, 0),
+        });
+      }
+    | NextSlide => {
+        let lastContentOnThisSlide = List.length(List.nth(content, state.currentSlide)) - 1;
+        let lastSlide = List.length(content) - 1;
+        ReasonReact.Update({
+          ...state,
+          currentSlide: min(state.currentSlideContent >= lastContentOnThisSlide
+            ? state.currentSlide + 1
+            : state.currentSlide, lastSlide),
+          currentSlideContent: state.currentSlide == lastSlide
+                                && state.currentSlideContent == lastContentOnThisSlide
+                                ? state.currentSlideContent
+                                : min(state.currentSlideContent >= lastContentOnThisSlide
+                                    ? 0
+                                    : state.currentSlideContent + 1, lastContentOnThisSlide),
+        });
+      }
+    },
 
   render: self => {
     let slideContents: list(string) = 

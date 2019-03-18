@@ -107,26 +107,37 @@ function make(content, isLoading, _children) {
           /* retainedProps */component[/* retainedProps */11],
           /* reducer */(function (action, state) {
               if (action) {
-                var match = state[/* currentSlideContent */1] >= (List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0);
-                var match$1 = state[/* currentSlide */0] === (List.length(content) - 1 | 0) && state[/* currentSlideContent */1] === (List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0);
+                var lastContentOnThisSlide = List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0;
+                var lastSlide = List.length(content) - 1 | 0;
+                var match = state[/* currentSlideContent */1] >= lastContentOnThisSlide;
+                var match$1 = state[/* currentSlide */0] === lastSlide && state[/* currentSlideContent */1] === lastContentOnThisSlide;
                 var tmp;
                 if (match$1) {
                   tmp = state[/* currentSlideContent */1];
                 } else {
-                  var match$2 = state[/* currentSlideContent */1] >= (List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0);
-                  tmp = Caml_primitive.caml_int_min(match$2 ? 0 : state[/* currentSlideContent */1] + 1 | 0, List.length(List.nth(content, state[/* currentSlide */0])) - 1 | 0);
+                  var match$2 = state[/* currentSlideContent */1] >= lastContentOnThisSlide;
+                  tmp = Caml_primitive.caml_int_min(match$2 ? 0 : state[/* currentSlideContent */1] + 1 | 0, lastContentOnThisSlide);
                 }
                 return /* Update */Block.__(0, [/* record */[
-                            /* currentSlide */Caml_primitive.caml_int_min(match ? state[/* currentSlide */0] + 1 | 0 : state[/* currentSlide */0], List.length(content) - 1 | 0),
+                            /* currentSlide */Caml_primitive.caml_int_min(match ? state[/* currentSlide */0] + 1 | 0 : state[/* currentSlide */0], lastSlide),
                             /* currentSlideContent */tmp,
                             /* keyDownHandler */state[/* keyDownHandler */2]
                           ]]);
               } else {
-                var match$3 = state[/* currentSlideContent */1] <= 0;
+                var match$3 = state[/* currentSlide */0] > 0;
+                var lastContentOnPreviousSlide = match$3 ? List.length(List.nth(content, state[/* currentSlide */0] - 1 | 0)) - 1 | 0 : -1;
                 var match$4 = state[/* currentSlideContent */1] <= 0;
+                var match$5 = state[/* currentSlideContent */1] <= 0 && state[/* currentSlide */0] <= 0;
+                var tmp$1;
+                if (match$5) {
+                  tmp$1 = 0;
+                } else {
+                  var match$6 = state[/* currentSlideContent */1] <= 0;
+                  tmp$1 = Caml_primitive.caml_int_max(match$6 ? lastContentOnPreviousSlide : state[/* currentSlideContent */1] - 1 | 0, 0);
+                }
                 return /* Update */Block.__(0, [/* record */[
-                            /* currentSlide */Caml_primitive.caml_int_max(match$3 ? state[/* currentSlide */0] - 1 | 0 : state[/* currentSlide */0], 0),
-                            /* currentSlideContent */Caml_primitive.caml_int_max(match$4 ? 0 : state[/* currentSlideContent */1] - 1 | 0, 0),
+                            /* currentSlide */Caml_primitive.caml_int_max(match$4 ? state[/* currentSlide */0] - 1 | 0 : state[/* currentSlide */0], 0),
+                            /* currentSlideContent */tmp$1,
                             /* keyDownHandler */state[/* keyDownHandler */2]
                           ]]);
               }
