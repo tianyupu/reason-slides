@@ -16,7 +16,7 @@ let style = ReactDOMRe.Style.make(
     ~height="100%",
     ~position="relative",
     ~overflow="hidden",
-    ~backgroundColor="#eba6f4",
+    ~backgroundColor="#002b36",
     ()
 );
 
@@ -28,7 +28,7 @@ let controlsStyle = ReactDOMRe.Style.make(
 );
 
 let leftControlStyle = ReactDOMRe.Style.make(
-    ~borderRightColor="#777",
+    ~borderRightColor="#93a1a1",
     ~borderRightWidth="22px",
     ~padding="0",
     ~backgroundColor="transparent",
@@ -38,7 +38,7 @@ let leftControlStyle = ReactDOMRe.Style.make(
     ()
 );
 let rightControlStyle = ReactDOMRe.Style.make(
-    ~borderLeftColor="#777",
+    ~borderLeftColor="#93a1a1",
     ~borderLeftWidth="22px",
     ~padding="0",
     ~backgroundColor="transparent",

@@ -12,7 +12,7 @@ var Slide$ReactTemplate = require("./Slide.bs.js");
 var component = ReasonReact.reducerComponent("Slides");
 
 var style = {
-  backgroundColor: "#eba6f4",
+  backgroundColor: "#002b36",
   height: "100%",
   overflow: "hidden",
   position: "relative",
@@ -28,7 +28,7 @@ var controlsStyle = {
 var leftControlStyle = {
   backgroundColor: "transparent",
   border: "12px solid transparent",
-  borderRightColor: "#777",
+  borderRightColor: "#93a1a1",
   borderRightWidth: "22px",
   cursor: "pointer",
   margin: "0 5px 0 5px",
@@ -38,7 +38,7 @@ var leftControlStyle = {
 var rightControlStyle = {
   backgroundColor: "transparent",
   border: "12px solid transparent",
-  borderLeftColor: "#777",
+  borderLeftColor: "#93a1a1",
   borderLeftWidth: "22px",
   cursor: "pointer",
   margin: "0 5px 0 5px",
