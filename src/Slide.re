@@ -8,6 +8,10 @@ let style = ReactDOMRe.Style.make(
     ~display="flex",
     ~flexDirection="column",
     ~justifyContent="center",
+    ~left="50%",
+    ~top="50%",
+    ~transform="translate(-50%, -50%)",
+    ~position="absolute",
     ()
 );
 

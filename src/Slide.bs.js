@@ -12,11 +12,15 @@ var component = ReasonReact.statelessComponent("Slide");
 var style = {
   display: "flex",
   height: "90%",
+  left: "50%",
   margin: "auto",
+  position: "absolute",
   textAlign: "center",
+  top: "50%",
   width: "90%",
   flexDirection: "column",
-  justifyContent: "center"
+  justifyContent: "center",
+  transform: "translate(-50%, -50%)"
 };
 
 function contentStyle(isHidden) {
