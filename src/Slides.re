@@ -59,10 +59,8 @@ let make = (~content, ~isLoading, _children) => {
 
   didMount: self => {
     self.state.keyDownHandler := e => (switch (KeyboardEventRe.key(e)) {
-        | "ArrowLeft" => self.send(PreviousSlide)
-        | "PageUp" => self.send(PreviousSlide)
-        | "ArrowRight" => self.send(NextSlide)
-        | "PageDown" => self.send(NextSlide)
+        | "ArrowLeft" | "PageUp" => self.send(PreviousSlide)
+        | "ArrowRight" | "PageDown" => self.send(NextSlide)
         | _ => ()
       });
     EventTargetRe.addKeyDownEventListener(
