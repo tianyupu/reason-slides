@@ -55,10 +55,12 @@ function make(content, isLoading, _children) {
               self[/* state */1][/* keyDownHandler */2][0] = (function (e) {
                   var match = e.key;
                   switch (match) {
-                    case "ArrowLeft" : 
-                        return Curry._1(self[/* send */3], /* PreviousSlide */0);
                     case "ArrowRight" : 
+                    case "PageDown" : 
                         return Curry._1(self[/* send */3], /* NextSlide */1);
+                    case "ArrowLeft" : 
+                    case "PageUp" : 
+                        return Curry._1(self[/* send */3], /* PreviousSlide */0);
                     default:
                       return /* () */0;
                   }
