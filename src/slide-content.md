@@ -1,10 +1,12 @@
 # The Reason for ReasonML
-### Tianyu Pu
-![codemotion-logo](img/codemotion_logo_orange_white.png)
-![license-cc](img/license-cc.png)
-![license-by](img/license-by.png)
-![license-nc](img/license-nc.png)
-![license-sa](img/license-sa.png)
+## Tianyu Pu
+<div style="margin: auto; height: 50%; width: 50%">
+    <img src="img/codemotion_logo_orange_white.png" />
+    <img src="img/license-cc.png" />
+    <img src="img/license-by.png" />
+    <img src="img/license-nc.png" />
+    <img src="img/license-sa.png" />
+</div>
 ---
 
 ---
