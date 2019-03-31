@@ -14,7 +14,14 @@ function make(markdown, _children) {
           /* reactClassInternal */component[/* reactClassInternal */1],
           /* handedOffState */component[/* handedOffState */2],
           /* willReceiveProps */component[/* willReceiveProps */3],
-          /* didMount */component[/* didMount */4],
+          /* didMount */(function (self) {
+              var match = self[/* state */1][/* converter */0][0];
+              if (match !== undefined) {
+                return Caml_option.valFromOption(match).setFlavor("github");
+              } else {
+                return /* () */0;
+              }
+            }),
           /* didUpdate */component[/* didUpdate */5],
           /* willUnmount */component[/* willUnmount */6],
           /* willUpdate */component[/* willUpdate */7],

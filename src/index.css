@@ -24,3 +24,8 @@ html, body {
     height: 100%;
     overflow: hidden;
 }
+
+a {
+    color: #b58900;
+    text-decoration: none;
+}

@@ -9,7 +9,7 @@ var Slides$ReactTemplate = require("./Slides.bs.js");
 
 var slideSeparator = "\n---\n";
 
-var slideContentSeparator = "\n";
+var slideContentSeparator = "\n\n";
 
 ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Slides$ReactTemplate.make(/* :: */[
               /* [] */0,

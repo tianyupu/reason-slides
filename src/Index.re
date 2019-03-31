@@ -1,5 +1,5 @@
 let slideSeparator = "\n---\n";
-let slideContentSeparator = "\n";
+let slideContentSeparator = "\n\n";
 
 ReactDOMRe.renderToElementWithId(<Slides isLoading={true} content={[[]]} />, "index1");
 
