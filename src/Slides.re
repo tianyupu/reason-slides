@@ -7,7 +7,13 @@ type state = {
 type action =
   | PreviousSlide
   | NextSlide
+  | GoToSlide(int, int)
 ;
+
+let updateHistory = (slide, content) => {
+  let newUrl = "#/" ++ string_of_int(slide) ++ "/" ++ string_of_int(content);
+  HistoryRe.pushState(HistoryRe.state(DomRe.history), "", newUrl, DomRe.history);
+}
 
 let component = ReasonReact.reducerComponent("Slides");
 
@@ -67,6 +73,11 @@ let make = (~content, ~isLoading, _children) => {
       self.state.keyDownHandler^,
       DocumentRe.asEventTarget(Webapi.Dom.document)
     );
+    let pathSegments = Js.String.split("/", LocationRe.hash(DomRe.location));
+    switch (pathSegments) {
+      | [|"#", a, b|] => self.send(GoToSlide(int_of_string(a), int_of_string(b)))
+      | _ => ()
+    };
   },
 
   willUnmount: self => {
@@ -82,7 +93,7 @@ let make = (~content, ~isLoading, _children) => {
         let lastContentOnPreviousSlide = state.currentSlide > 0
           ? List.length(List.nth(content, state.currentSlide-1)) - 1
           : -1 ;
-        ReasonReact.Update({
+        ReasonReact.UpdateWithSideEffects({
           ...state,
           currentSlide: max(state.currentSlideContent <= 0
             ? state.currentSlide - 1
@@ -93,12 +104,12 @@ let make = (~content, ~isLoading, _children) => {
                                 : max(state.currentSlideContent <= 0
                                     ? lastContentOnPreviousSlide
                                     : state.currentSlideContent - 1, 0),
-        });
+        }, ({ state }) => updateHistory(state.currentSlide, state.currentSlideContent));
       }
     | NextSlide => {
         let lastContentOnThisSlide = List.length(List.nth(content, state.currentSlide)) - 1;
         let lastSlide = List.length(content) - 1;
-        ReasonReact.Update({
+        ReasonReact.UpdateWithSideEffects({
           ...state,
           currentSlide: min(state.currentSlideContent >= lastContentOnThisSlide
             ? state.currentSlide + 1
@@ -109,21 +120,29 @@ let make = (~content, ~isLoading, _children) => {
                                 : min(state.currentSlideContent >= lastContentOnThisSlide
                                     ? 0
                                     : state.currentSlideContent + 1, lastContentOnThisSlide),
-        });
+        }, ({ state }) => updateHistory(state.currentSlide, state.currentSlideContent));
       }
+    | GoToSlide(a, b) => ReasonReact.Update({
+          ...state,
+          currentSlide: a,
+          currentSlideContent: b,
+        });
     },
 
   render: self => {
-    let slideContents: list(string) = 
-      List.nth(content, self.state.currentSlide);
-    isLoading
-    ? <h1>{ReasonReact.string("Loading slides...")}</h1>
-    : <div style>
-        <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
-        <aside style={controlsStyle}>
-          <button onClick={_event => self.send(PreviousSlide)} style={leftControlStyle}></button>
-          <button onClick={_event => self.send(NextSlide)} style={rightControlStyle}></button>
-        </aside>
-      </div>;
+    switch (isLoading) {
+      | true => <h1>{ReasonReact.string("Loading slides...")}</h1>
+      | false => {
+          let slideContents: list(string) = 
+            List.nth(content, self.state.currentSlide);
+          <div style>
+            <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
+            <aside style={controlsStyle}>
+              <button onClick={_event => self.send(PreviousSlide)} style={leftControlStyle}></button>
+              <button onClick={_event => self.send(NextSlide)} style={rightControlStyle}></button>
+            </aside>
+          </div>;
+        }
+    }
   },
 };
