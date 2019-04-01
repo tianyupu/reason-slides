@@ -580,4 +580,5 @@ Smooth JS interop, thanks to BuckleScript!
 [linkedin.com/in/tianyupu](https://www.linkedin.com/in/tianyupu/)
 ---
 ## Resources
-https://github.com/moroshko/bs-blabla
+[bs directives reference](https://github.com/moroshko/bs-blabla)
+[bsconfig schema reference](https://bucklescript.github.io/bucklescript/docson/#build-schema.json)
