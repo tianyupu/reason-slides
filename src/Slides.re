@@ -67,6 +67,10 @@ let make = (~content, ~isLoading, _children) => {
     self.state.keyDownHandler := e => switch (KeyboardEventRe.key(e)) {
         | "ArrowLeft" | "PageUp" => self.send(PreviousSlide)
         | "ArrowRight" | "PageDown" => self.send(NextSlide)
+        | "f" => switch (DocumentRe.getElementById("index1", Webapi.Dom.document)) {
+          | Some(el) => el |> ElementRe.requestFullscreen
+          | None => ()
+        }
         | _ => ()
       };
     EventTargetRe.addKeyDownEventListener(

@@ -68,6 +68,14 @@ function make(content, isLoading, _children) {
                     case "ArrowLeft" : 
                     case "PageUp" : 
                         return Curry._1(self[/* send */3], /* PreviousSlide */0);
+                    case "f" : 
+                        var match$1 = document.getElementById("index1");
+                        if (match$1 == null) {
+                          return /* () */0;
+                        } else {
+                          match$1.requestFullscreen();
+                          return /* () */0;
+                        }
                     default:
                       return /* () */0;
                   }
