@@ -22,9 +22,9 @@ Cannot read property '____' of undefined
 ---
 ![ocaml](img/ocaml.svg)
 ---
-## A whirlwind tour of ReasonML
+## 🚀 A whirlwind tour of ReasonML 🚀
 ---
-### Types (1)
+### Types
 
 100% coverage
 
@@ -32,10 +32,14 @@ Sound
 
 Inferred
 ---
-### Types (2)
+### Types in action
 
 ```
 type name = string;
+```
+
+```
+let firstName: name = "Tian";
 ```
 
 ---
@@ -52,10 +56,62 @@ type loginStatus =
 
 ```
 let status = LoggedIn("tian");
+…
+…
+…
+…
+…
+```
+
+---
+
+### Pattern matching (1)
+
+```
+let status = LoggedIn("tian");
 switch (status) {
-    | NotLoggedIn => "Please login"
-    | LoggedIn("admin") => "Welcome, superuser!"
-    | LoggedIn(username) => "Hello, " ++ username
+  …
+  …
+  …
+}
+```
+
+---
+
+### Pattern matching (1)
+
+```
+let status = LoggedIn("tian");
+switch (status) {
+  | NotLoggedIn => ":("
+  | …
+  | …
+}
+```
+
+---
+
+### Pattern matching (1)
+
+```
+let status = LoggedIn("tian");
+switch (status) {
+  | NotLoggedIn => ":("
+  | LoggedIn("admin") => "!"
+  | …
+}
+```
+
+---
+
+### Pattern matching (1)
+
+```
+let status = LoggedIn("tian");
+switch (status) {
+  | NotLoggedIn => ":("
+  | LoggedIn("admin") => "!"
+  | LoggedIn(user) => ":)"
 }
 ```
 
@@ -63,16 +119,60 @@ switch (status) {
 ### Pattern matching (2)
 
 ```
-switch (list) => {
-    | [] => "The list is empty..."
-    | [head, ...tail] => "The first item is " ++ a
+switch (someList) {
+  …
+  …
+  …
+}
+```
+
+---
+
+### Pattern matching (2)
+
+```
+switch (someList) {
+  | [] => "The list is empty..."
+  …
+  …
+}
+```
+
+---
+
+### Pattern matching (2)
+
+```
+switch (someList) {
+  | [] => "The list is empty..."
+  | [head, ...tail] => …
+  …
+}
+```
+
+---
+
+### Pattern matching (2)
+
+```
+switch (someList) {
+  | [] => "The list is empty..."
+  | [head, ...tail] => head ++
+    " is the first item"
 }
 ```
 
 ---
 ### Pattern matching (3)
 
-(pattern matching of a complex if-else)
+```
+switch (divisibleBy3, divisibleBy5) {
+  | (true, true) => "Fizz Buzz"
+  | (true, false) => "Fizz"
+  | (false, true) => "Buzz"
+  | (false, false) => ""
+}
+```
 
 ---
 ### Special mention: `option`
@@ -94,7 +194,19 @@ No more null / undefined bugs, ever! 🙌
 ```
 
 ---
-### Records (1)
+### Records
+
+```
+type conference = {
+  …
+  …
+  …
+};
+```
+
+---
+
+### Records
 
 ```
 type conference = {
@@ -103,34 +215,115 @@ type conference = {
   location: string
 };
 ```
+
 ---
-### Records (2)
+### Records
+
+```
+let thisConference = {
+  … 
+  … 
+  … 
+};
+```
+
+---
+
+### Records
 
 ```
 let thisConference = {
   name: "Codemotion",
   year: 2019,
-  location: "Amsterdam"
+  location: "AMS"
 };
 ```
 
 ---
-### Objects - closed (1)
+### Objects - closed
 
 ```
 type person = {
-    .
-    name: string
+  …
+  …
 };
 ```
 
 ---
-### Objects - closed (2)
+
+### Objects - closed
+
+```
+type person = {
+  …
+  name: string
+};
+```
+
+---
+
+### Objects - closed
+
+```
+type person = {
+  .
+  name: string
+};
+```
+
+---
+
+### Objects - closed
 
 ```
 let author: person = {
-    val authorName = "Victor Hugo";
-    pub name = authorName;
+  …
+  …
+};
+```
+
+```
+…
+```
+
+---
+
+### Objects - closed 
+
+```
+let author: person = {
+  val age = 100;
+  …
+};
+```
+
+```
+…
+```
+
+---
+
+### Objects - closed 
+
+```
+let author: person = {
+  val age = 100;
+  pub name = "V. Hugo";
+};
+```
+
+```
+…
+```
+
+---
+
+### Objects - closed 
+
+```
+let author: person = {
+  val age = 100;
+  pub name = "V. Hugo";
 };
 ```
 
@@ -139,23 +332,23 @@ author#name
 ```
 
 ---
-### Objects - open (1)
+### Objects - open
 
 ```
 type named('t) = {
-    ..
-    name: string
+  ..
+  name: string
 } as 't;
 ```
 
 ---
-### Objects - open (2)
+### Objects - open
 
 ```
 let author: named({. name: string, write: string => unit}) = {
-    val currentBook = ref(string);
-    pub name = "Victor Hugo";
-    pub write = string => currentBook := currentBook^ ++ string
+  val currentBook = ref(string);
+  pub name = "Victor Hugo";
+  pub write = string => currentBook := currentBook^ ++ string
 };
 ```
 
@@ -193,7 +386,7 @@ external cStrcmp: string => int = "strcmp";
 ---
 ### _Reason #1:_
 
-The language!
+The language! ✨
 ---
 ## But, JavaScript?!?!
 
@@ -208,7 +401,9 @@ OCaml → JavaScript!
 ---
 How? 🤔
 ---
-![bucklescript](img/bucklescript.svg)
+<img width="150px"
+     src="img/bucklescript.svg"
+     alt="BuckleScript logo" />
 ---
 ### BuckleScript
 
@@ -225,7 +420,7 @@ All you need: **bsconfig.json** and **`bsb`**
   "name": "my-project",
   "sources": {
     "dir": "src"
-  },
+  }
 }
 ```
 
@@ -249,7 +444,6 @@ TLDR; You can already write entire JS apps in pure Reason! 🎉
 ---
 Remember `external`?
 ---
-
 ```
 external cStrcmp: string => int = "strcmp";
 ```
@@ -287,6 +481,58 @@ Otherwise, write your own:
 ---
 ### Using Reason in JS
 ---
+
+Again, the bsconfig.json:
+
+```
+{
+  "name": "my-project",
+  "sources": { "dir": "src" },
+  "bs-dependencies": [ "bs-webapi" ],
+  …
+  …
+  …
+  …
+  …
+}
+```
+
+---
+
+Again, the bsconfig.json:
+
+```
+{
+  "name": "my-project",
+  "sources": { "dir": "src" },
+  "bs-dependencies": [ "bs-webapi" ],
+  "package-specs": [{
+    "module": "commonjs",
+    …
+  }],
+  …
+}
+```
+
+---
+
+Again, the bsconfig.json:
+
+```
+{
+  "name": "my-project",
+  "sources": { "dir": "src" },
+  "bs-dependencies": [ "bs-webapi" ],
+  "package-specs": [{
+    "module": "commonjs",
+    "in-source": true
+  }],
+  …
+}
+```
+
+---
+
 Again, the bsconfig.json:
 
 ```
@@ -303,7 +549,14 @@ Again, the bsconfig.json:
 ```
 
 ---
-(supported module types and examples of how to use)
+#### Supported module types
+
+```
+amdjs[-global]
+commonjs
+es6[-global]
+```
+
 ---
 (Migrating an existing file into Reason - the process)
 ---
@@ -312,6 +565,9 @@ Again, the bsconfig.json:
 Smooth JS interop, thanks to BuckleScript!
 ---
 ## Questions?
+
+---
+## Recap
 
 ---
 ## The end

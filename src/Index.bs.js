@@ -11,6 +11,8 @@ var slideSeparator = "\n---\n";
 
 var slideContentSeparator = "\n\n";
 
+var fixedSlideIndicator = "\n";
+
 ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Slides$ReactTemplate.make(/* :: */[
               /* [] */0,
               /* [] */0
@@ -22,7 +24,15 @@ fetch("slide-content.md").then((function (prim) {
             return Promise.resolve($$Array.to_list(text.split(slideSeparator)));
           })).then((function (slideArray) {
           return Promise.resolve(List.map((function (slide) {
-                            return $$Array.to_list(slide.split(slideContentSeparator));
+                            var match = slide.startsWith(fixedSlideIndicator);
+                            if (match) {
+                              return /* :: */[
+                                      slide,
+                                      /* [] */0
+                                    ];
+                            } else {
+                              return $$Array.to_list(slide.split(slideContentSeparator));
+                            }
                           }), slideArray));
         })).then((function (slideContent) {
         return Promise.resolve(ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Slides$ReactTemplate.make(slideContent, false, /* array */[])), "index1"));
@@ -30,4 +40,5 @@ fetch("slide-content.md").then((function (prim) {
 
 exports.slideSeparator = slideSeparator;
 exports.slideContentSeparator = slideContentSeparator;
+exports.fixedSlideIndicator = fixedSlideIndicator;
 /*  Not a pure module */
