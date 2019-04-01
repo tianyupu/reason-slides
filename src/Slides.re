@@ -64,11 +64,11 @@ let make = (~content, ~isLoading, _children) => {
   },
 
   didMount: self => {
-    self.state.keyDownHandler := e => (switch (KeyboardEventRe.key(e)) {
+    self.state.keyDownHandler := e => switch (KeyboardEventRe.key(e)) {
         | "ArrowLeft" | "PageUp" => self.send(PreviousSlide)
         | "ArrowRight" | "PageDown" => self.send(NextSlide)
         | _ => ()
-      });
+      };
     EventTargetRe.addKeyDownEventListener(
       self.state.keyDownHandler^,
       DocumentRe.asEventTarget(Webapi.Dom.document)
