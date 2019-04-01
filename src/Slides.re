@@ -10,10 +10,18 @@ type action =
   | GoToSlide(int, int)
 ;
 
-let updateHistory = (slide, content) => {
+let updateOrReplaceHistory = (~replace, slide, content) => {
   let newUrl = "#/" ++ string_of_int(slide) ++ "/" ++ string_of_int(content);
-  HistoryRe.pushState(HistoryRe.state(DomRe.history), "", newUrl, DomRe.history);
+  replace
+    ? HistoryRe.replaceState(HistoryRe.state(DomRe.history), "", newUrl, DomRe.history)
+    : HistoryRe.pushState(HistoryRe.state(DomRe.history), "", newUrl, DomRe.history);
 }
+
+let resetSlides = (state, slideIndex, slideContentIndex) => ReasonReact.UpdateWithSideEffects({
+  ...state,
+  currentSlide: slideIndex,
+  currentSlideContent: slideContentIndex,
+}, ({ state }) => updateOrReplaceHistory(~replace=true, state.currentSlide, state.currentSlideContent))
 
 let component = ReasonReact.reducerComponent("Slides");
 
@@ -54,7 +62,7 @@ let rightControlStyle = ReactDOMRe.Style.make(
     ()
 );
 
-let make = (~content, ~isLoading, _children) => {
+let make = (~content, _children) => {
   ...component,
 
   initialState: () => { 
@@ -80,7 +88,7 @@ let make = (~content, ~isLoading, _children) => {
     let pathSegments = Js.String.split("/", LocationRe.hash(DomRe.location));
     switch (pathSegments) {
       | [|"#", a, b|] => self.send(GoToSlide(int_of_string(a), int_of_string(b)))
-      | _ => ()
+      | _ => self.send(GoToSlide(0, 0))
     };
   },
 
@@ -108,7 +116,7 @@ let make = (~content, ~isLoading, _children) => {
                                 : max(state.currentSlideContent <= 0
                                     ? lastContentOnPreviousSlide
                                     : state.currentSlideContent - 1, 0),
-        }, ({ state }) => updateHistory(state.currentSlide, state.currentSlideContent));
+        }, ({ state }) => updateOrReplaceHistory(~replace=false, state.currentSlide, state.currentSlideContent));
       }
     | NextSlide => {
         let lastContentOnThisSlide = List.length(List.nth(content, state.currentSlide)) - 1;
@@ -124,29 +132,28 @@ let make = (~content, ~isLoading, _children) => {
                                 : min(state.currentSlideContent >= lastContentOnThisSlide
                                     ? 0
                                     : state.currentSlideContent + 1, lastContentOnThisSlide),
-        }, ({ state }) => updateHistory(state.currentSlide, state.currentSlideContent));
+        }, ({ state }) => updateOrReplaceHistory(~replace=false, state.currentSlide, state.currentSlideContent));
       }
-    | GoToSlide(a, b) => ReasonReact.Update({
-          ...state,
-          currentSlide: a,
-          currentSlideContent: b,
-        });
+    | GoToSlide(a, b) => {
+      switch (List.nth(content, a)) {
+        | slide => switch (List.nth(slide, b)) {
+            | _content => resetSlides(state, a, b)
+            | exception Failure("nth") => resetSlides(state, 0, 0)
+          }
+        | exception Failure("nth") => resetSlides(state, 0, 0)
+        }
+      }
     },
 
   render: self => {
-    switch (isLoading) {
-      | true => <h1>{ReasonReact.string("Loading slides...")}</h1>
-      | false => {
-          let slideContents: list(string) = 
-            List.nth(content, self.state.currentSlide);
-          <div style>
-            <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
-            <aside style={controlsStyle}>
-              <button onClick={_event => self.send(PreviousSlide)} style={leftControlStyle}></button>
-              <button onClick={_event => self.send(NextSlide)} style={rightControlStyle}></button>
-            </aside>
-          </div>;
-        }
-    }
+    let slideContents: list(string) = 
+      List.nth(content, self.state.currentSlide);
+    <div style>
+      <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
+      <aside style={controlsStyle}>
+        <button onClick={_event => self.send(PreviousSlide)} style={leftControlStyle}></button>
+        <button onClick={_event => self.send(NextSlide)} style={rightControlStyle}></button>
+      </aside>
+    </div>;
   },
 };

@@ -2,8 +2,6 @@ let slideSeparator = "\n---\n";
 let slideContentSeparator = "\n\n";
 let fixedSlideIndicator = "\n";
 
-ReactDOMRe.renderToElementWithId(<Slides isLoading={true} content={[[]]} />, "index1");
-
 Js.Promise.(
   Fetch.fetch("slide-content.md")
   |> then_(Fetch.Response.text)
@@ -13,5 +11,5 @@ Js.Promise.(
                         [slide] :
                         Array.to_list(Js.String.split(slideContentSeparator, slide)), slideArray) 
     |> resolve)
-  |> then_(slideContent => ReactDOMRe.renderToElementWithId(<Slides isLoading={false} content={slideContent} />, "index1") |> resolve)
+  |> then_(slideContent => ReactDOMRe.renderToElementWithId(<Slides content={slideContent} />, "index1") |> resolve)
 );

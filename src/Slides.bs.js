@@ -8,12 +8,33 @@ var React = require("react");
 var Caml_format = require("bs-platform/lib/js/caml_format.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var Caml_primitive = require("bs-platform/lib/js/caml_primitive.js");
+var Caml_js_exceptions = require("bs-platform/lib/js/caml_js_exceptions.js");
 var Slide$ReactTemplate = require("./Slide.bs.js");
+var Caml_builtin_exceptions = require("bs-platform/lib/js/caml_builtin_exceptions.js");
 
-function updateHistory(slide, content) {
+function updateOrReplaceHistory(replace, slide, content) {
   var newUrl = "#/" + (String(slide) + ("/" + String(content)));
-  window.history.pushState(window.history.state, "", newUrl);
-  return /* () */0;
+  if (replace) {
+    window.history.replaceState(window.history.state, "", newUrl);
+    return /* () */0;
+  } else {
+    window.history.pushState(window.history.state, "", newUrl);
+    return /* () */0;
+  }
+}
+
+function resetSlides(state, slideIndex, slideContentIndex) {
+  return /* UpdateWithSideEffects */Block.__(2, [
+            /* record */[
+              /* currentSlide */slideIndex,
+              /* currentSlideContent */slideContentIndex,
+              /* keyDownHandler */state[/* keyDownHandler */2]
+            ],
+            (function (param) {
+                var state = param[/* state */1];
+                return updateOrReplaceHistory(true, state[/* currentSlide */0], state[/* currentSlideContent */1]);
+              })
+          ]);
 }
 
 var component = ReasonReact.reducerComponent("Slides");
@@ -52,7 +73,7 @@ var rightControlStyle = {
   padding: "0"
 };
 
-function make(content, isLoading, _children) {
+function make(content, _children) {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -83,7 +104,10 @@ function make(content, isLoading, _children) {
               document.addEventListener("keydown", self[/* state */1][/* keyDownHandler */2][0]);
               var pathSegments = window.location.hash.split("/");
               if (pathSegments.length !== 3) {
-                return /* () */0;
+                return Curry._1(self[/* send */3], /* GoToSlide */[
+                            0,
+                            0
+                          ]);
               } else {
                 var match = pathSegments[0];
                 if (match === "#") {
@@ -94,7 +118,10 @@ function make(content, isLoading, _children) {
                               Caml_format.caml_int_of_string(b)
                             ]);
                 } else {
-                  return /* () */0;
+                  return Curry._1(self[/* send */3], /* GoToSlide */[
+                              0,
+                              0
+                            ]);
                 }
               }
             }),
@@ -106,26 +133,22 @@ function make(content, isLoading, _children) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function (self) {
-              if (isLoading) {
-                return React.createElement("h1", undefined, "Loading slides...");
-              } else {
-                var slideContents = List.nth(content, self[/* state */1][/* currentSlide */0]);
-                return React.createElement("div", {
-                            style: style
-                          }, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, self[/* state */1][/* currentSlideContent */1], /* array */[])), React.createElement("aside", {
-                                style: controlsStyle
-                              }, React.createElement("button", {
-                                    style: leftControlStyle,
-                                    onClick: (function (_event) {
-                                        return Curry._1(self[/* send */3], /* PreviousSlide */0);
-                                      })
-                                  }), React.createElement("button", {
-                                    style: rightControlStyle,
-                                    onClick: (function (_event) {
-                                        return Curry._1(self[/* send */3], /* NextSlide */1);
-                                      })
-                                  })));
-              }
+              var slideContents = List.nth(content, self[/* state */1][/* currentSlide */0]);
+              return React.createElement("div", {
+                          style: style
+                        }, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, self[/* state */1][/* currentSlideContent */1], /* array */[])), React.createElement("aside", {
+                              style: controlsStyle
+                            }, React.createElement("button", {
+                                  style: leftControlStyle,
+                                  onClick: (function (_event) {
+                                      return Curry._1(self[/* send */3], /* PreviousSlide */0);
+                                    })
+                                }), React.createElement("button", {
+                                  style: rightControlStyle,
+                                  onClick: (function (_event) {
+                                      return Curry._1(self[/* send */3], /* NextSlide */1);
+                                    })
+                                })));
             }),
           /* initialState */(function (param) {
               return /* record */[
@@ -159,7 +182,7 @@ function make(content, isLoading, _children) {
                             ],
                             (function (param) {
                                 var state = param[/* state */1];
-                                return updateHistory(state[/* currentSlide */0], state[/* currentSlideContent */1]);
+                                return updateOrReplaceHistory(false, state[/* currentSlide */0], state[/* currentSlideContent */1]);
                               })
                           ]);
                 } else {
@@ -182,23 +205,64 @@ function make(content, isLoading, _children) {
                             ],
                             (function (param) {
                                 var state = param[/* state */1];
-                                return updateHistory(state[/* currentSlide */0], state[/* currentSlideContent */1]);
+                                return updateOrReplaceHistory(false, state[/* currentSlide */0], state[/* currentSlideContent */1]);
                               })
                           ]);
                 }
               } else {
-                return /* Update */Block.__(0, [/* record */[
-                            /* currentSlide */action[0],
-                            /* currentSlideContent */action[1],
-                            /* keyDownHandler */state[/* keyDownHandler */2]
-                          ]]);
+                var b = action[1];
+                var a = action[0];
+                var exit = 0;
+                var slide;
+                try {
+                  slide = List.nth(content, a);
+                  exit = 1;
+                }
+                catch (raw_exn){
+                  var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
+                  if (exn[0] === Caml_builtin_exceptions.failure) {
+                    if (exn[1] === "nth") {
+                      return resetSlides(state, 0, 0);
+                    } else {
+                      throw exn;
+                    }
+                  } else {
+                    throw exn;
+                  }
+                }
+                if (exit === 1) {
+                  var exit$1 = 0;
+                  var _content;
+                  try {
+                    _content = List.nth(slide, b);
+                    exit$1 = 2;
+                  }
+                  catch (raw_exn$1){
+                    var exn$1 = Caml_js_exceptions.internalToOCamlException(raw_exn$1);
+                    if (exn$1[0] === Caml_builtin_exceptions.failure) {
+                      if (exn$1[1] === "nth") {
+                        return resetSlides(state, 0, 0);
+                      } else {
+                        throw exn$1;
+                      }
+                    } else {
+                      throw exn$1;
+                    }
+                  }
+                  if (exit$1 === 2) {
+                    return resetSlides(state, a, b);
+                  }
+                  
+                }
+                
               }
             }),
           /* jsElementWrapped */component[/* jsElementWrapped */13]
         ];
 }
 
-exports.updateHistory = updateHistory;
+exports.updateOrReplaceHistory = updateOrReplaceHistory;
+exports.resetSlides = resetSlides;
 exports.component = component;
 exports.style = style;
 exports.controlsStyle = controlsStyle;
