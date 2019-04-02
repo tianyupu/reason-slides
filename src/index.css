@@ -34,10 +34,12 @@ img {
     max-width: 100%;
 }
 
+/* Code should be aligned left, unlike the rest of the content. */
 pre {
     text-align: left;
 }
 
+/* This is to remove the margin added by the user-agent style */
 pre, p {
     margin: 1.5em 0 0 0;
 }
@@ -54,10 +56,14 @@ pre, p {
     margin: 0;
 }
 
+/* Remove the padding added by highlightjs, as it messes with the
+   slide transitions. */
 pre code.hljs {
     padding: 0;
 }
 
+/* Remove margins on these headings to assist with multi-slide
+   transitions. */
 h3, h4 {
     margin-block-start: auto;
     margin-block-end: auto;
