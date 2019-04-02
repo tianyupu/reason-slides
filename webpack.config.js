@@ -13,6 +13,38 @@ module.exports = {
     path: outputDir,
     filename: 'Index.js'
   },
+  module: {
+    rules: [
+      {
+        test: /light\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              attrs: {
+                id: 'light'
+              }
+            }
+          },
+          'css-loader'
+        ],
+      },
+      {
+        test: /dark\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              attrs: {
+                id: 'dark'
+              }
+            }
+          },
+          'css-loader'
+        ],
+      },
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html',

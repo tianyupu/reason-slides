@@ -6,11 +6,16 @@ var Block = require("bs-platform/lib/js/block.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Caml_format = require("bs-platform/lib/js/caml_format.js");
+var Caml_option = require("bs-platform/lib/js/caml_option.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var Caml_primitive = require("bs-platform/lib/js/caml_primitive.js");
 var Caml_js_exceptions = require("bs-platform/lib/js/caml_js_exceptions.js");
 var Slide$ReactTemplate = require("./Slide.bs.js");
 var Caml_builtin_exceptions = require("bs-platform/lib/js/caml_builtin_exceptions.js");
+
+(( require("tianyupu-highlight.js/styles/solarized-dark.css") ));
+
+(( require("tianyupu-highlight.js/styles/solarized-light.css") ));
 
 function updateOrReplaceHistory(replace, slide, content) {
   var newUrl = "#/" + (String(slide) + ("/" + String(content)));
@@ -29,7 +34,9 @@ function resetSlides(state, slideIndex, slideContentIndex) {
               /* currentSlide */slideIndex,
               /* currentSlideContent */slideContentIndex,
               /* keyDownHandler */state[/* keyDownHandler */2],
-              /* isDarkMode */state[/* isDarkMode */3]
+              /* isDarkMode */state[/* isDarkMode */3],
+              /* lightStyleEl */state[/* lightStyleEl */4],
+              /* darkStyleEl */state[/* darkStyleEl */5]
             ],
             (function (param) {
                 var state = param[/* state */1];
@@ -130,28 +137,107 @@ function make(content, _children) {
               document.addEventListener("keydown", self[/* state */1][/* keyDownHandler */2][0]);
               var pathSegments = window.location.hash.split("/");
               if (pathSegments.length !== 3) {
-                return Curry._1(self[/* send */3], /* GoToSlide */[
-                            0,
-                            0
-                          ]);
+                Curry._1(self[/* send */3], /* GoToSlide */[
+                      0,
+                      0
+                    ]);
               } else {
                 var match = pathSegments[0];
                 if (match === "#") {
                   var a = pathSegments[1];
                   var b = pathSegments[2];
-                  return Curry._1(self[/* send */3], /* GoToSlide */[
-                              Caml_format.caml_int_of_string(a),
-                              Caml_format.caml_int_of_string(b)
-                            ]);
+                  Curry._1(self[/* send */3], /* GoToSlide */[
+                        Caml_format.caml_int_of_string(a),
+                        Caml_format.caml_int_of_string(b)
+                      ]);
                 } else {
-                  return Curry._1(self[/* send */3], /* GoToSlide */[
-                              0,
-                              0
-                            ]);
+                  Curry._1(self[/* send */3], /* GoToSlide */[
+                        0,
+                        0
+                      ]);
                 }
               }
+              var lightEl = document.getElementById("light");
+              var darkEl = document.getElementById("dark");
+              var match$1 = self[/* state */1][/* isDarkMode */3];
+              if (match$1) {
+                if (!(lightEl == null) && !(darkEl == null)) {
+                  lightEl.remove();
+                  self[/* state */1][/* lightStyleEl */4][0] = Caml_option.some(lightEl);
+                  self[/* state */1][/* darkStyleEl */5][0] = Caml_option.some(darkEl);
+                  return /* () */0;
+                } else {
+                  return /* () */0;
+                }
+              } else if (!(lightEl == null) && !(darkEl == null)) {
+                darkEl.remove();
+                self[/* state */1][/* lightStyleEl */4][0] = Caml_option.some(lightEl);
+                self[/* state */1][/* darkStyleEl */5][0] = Caml_option.some(darkEl);
+                return /* () */0;
+              } else {
+                return /* () */0;
+              }
             }),
-          /* didUpdate */component[/* didUpdate */5],
+          /* didUpdate */(function (param) {
+              var newSelf = param[/* newSelf */1];
+              var lightEl = document.getElementById("light");
+              var darkEl = document.getElementById("dark");
+              var bodyEl = document.querySelector("body");
+              var match = newSelf[/* state */1][/* isDarkMode */3];
+              var match$1 = newSelf[/* state */1][/* lightStyleEl */4][0];
+              var match$2 = newSelf[/* state */1][/* darkStyleEl */5][0];
+              if (match) {
+                if (match$2 !== undefined) {
+                  var dark = Caml_option.valFromOption(match$2);
+                  if (lightEl == null) {
+                    if (!(darkEl == null) || (bodyEl == null)) {
+                      return /* () */0;
+                    } else {
+                      bodyEl.appendChild(dark);
+                      return /* () */0;
+                    }
+                  } else if (darkEl == null) {
+                    if (bodyEl == null) {
+                      return /* () */0;
+                    } else {
+                      lightEl.remove();
+                      bodyEl.appendChild(dark);
+                      return /* () */0;
+                    }
+                  } else {
+                    lightEl.remove();
+                    return /* () */0;
+                  }
+                } else {
+                  return /* () */0;
+                }
+              } else if (match$1 !== undefined) {
+                var light = Caml_option.valFromOption(match$1);
+                if (lightEl == null) {
+                  if (darkEl == null) {
+                    if (bodyEl == null) {
+                      return /* () */0;
+                    } else {
+                      bodyEl.appendChild(light);
+                      return /* () */0;
+                    }
+                  } else if (bodyEl == null) {
+                    return /* () */0;
+                  } else {
+                    darkEl.remove();
+                    bodyEl.appendChild(light);
+                    return /* () */0;
+                  }
+                } else if (darkEl == null) {
+                  return /* () */0;
+                } else {
+                  darkEl.remove();
+                  return /* () */0;
+                }
+              } else {
+                return /* () */0;
+              }
+            }),
           /* willUnmount */(function (self) {
               document.removeEventListener("keydown", self[/* state */1][/* keyDownHandler */2][0]);
               return /* () */0;
@@ -185,7 +271,9 @@ function make(content, _children) {
                       /* keyDownHandler : record */[/* contents */(function (_e) {
                             return /* () */0;
                           })],
-                      /* isDarkMode */true
+                      /* isDarkMode */true,
+                      /* lightStyleEl : record */[/* contents */undefined],
+                      /* darkStyleEl : record */[/* contents */undefined]
                     ];
             }),
           /* retainedProps */component[/* retainedProps */11],
@@ -209,7 +297,9 @@ function make(content, _children) {
                                   /* currentSlide */Caml_primitive.caml_int_max(match$1 ? state[/* currentSlide */0] - 1 | 0 : state[/* currentSlide */0], 0),
                                   /* currentSlideContent */tmp,
                                   /* keyDownHandler */state[/* keyDownHandler */2],
-                                  /* isDarkMode */state[/* isDarkMode */3]
+                                  /* isDarkMode */state[/* isDarkMode */3],
+                                  /* lightStyleEl */state[/* lightStyleEl */4],
+                                  /* darkStyleEl */state[/* darkStyleEl */5]
                                 ],
                                 (function (param) {
                                     var state = param[/* state */1];
@@ -233,7 +323,9 @@ function make(content, _children) {
                                   /* currentSlide */Caml_primitive.caml_int_min(match$4 ? state[/* currentSlide */0] + 1 | 0 : state[/* currentSlide */0], lastSlide),
                                   /* currentSlideContent */tmp$1,
                                   /* keyDownHandler */state[/* keyDownHandler */2],
-                                  /* isDarkMode */state[/* isDarkMode */3]
+                                  /* isDarkMode */state[/* isDarkMode */3],
+                                  /* lightStyleEl */state[/* lightStyleEl */4],
+                                  /* darkStyleEl */state[/* darkStyleEl */5]
                                 ],
                                 (function (param) {
                                     var state = param[/* state */1];
@@ -245,7 +337,9 @@ function make(content, _children) {
                                   /* currentSlide */state[/* currentSlide */0],
                                   /* currentSlideContent */state[/* currentSlideContent */1],
                                   /* keyDownHandler */state[/* keyDownHandler */2],
-                                  /* isDarkMode */!state[/* isDarkMode */3]
+                                  /* isDarkMode */!state[/* isDarkMode */3],
+                                  /* lightStyleEl */state[/* lightStyleEl */4],
+                                  /* darkStyleEl */state[/* darkStyleEl */5]
                                 ]]);
                   
                 }
@@ -311,4 +405,4 @@ exports.controlsStyle = controlsStyle;
 exports.leftControlStyle = leftControlStyle;
 exports.rightControlStyle = rightControlStyle;
 exports.make = make;
-/* component Not a pure module */
+/*  Not a pure module */

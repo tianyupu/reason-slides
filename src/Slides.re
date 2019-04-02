@@ -1,8 +1,13 @@
+[%raw {| require("tianyupu-highlight.js/styles/solarized-dark.css") |}];
+[%raw {| require("tianyupu-highlight.js/styles/solarized-light.css") |}];
+
 type state = {
     currentSlide: int,
     currentSlideContent: int,
     keyDownHandler: ref(Dom.keyboardEvent => unit),
     isDarkMode: bool,
+    lightStyleEl: ref(option(Dom.element)),
+    darkStyleEl: ref(option(Dom.element)),
 };
 
 type action =
@@ -76,6 +81,8 @@ let make = (~content, _children) => {
     currentSlideContent: 0,
     keyDownHandler: ref(_e => ()),
     isDarkMode: true,
+    lightStyleEl: ref(None),
+    darkStyleEl: ref(None),
   },
 
   didMount: self => {
@@ -93,11 +100,28 @@ let make = (~content, _children) => {
       self.state.keyDownHandler^,
       DocumentRe.asEventTarget(Webapi.Dom.document)
     );
+
     let pathSegments = Js.String.split("/", LocationRe.hash(DomRe.location));
     switch (pathSegments) {
       | [|"#", a, b|] => self.send(GoToSlide(int_of_string(a), int_of_string(b)))
       | _ => self.send(GoToSlide(0, 0))
     };
+
+    let lightEl = DocumentRe.getElementById("light", Webapi.Dom.document);
+    let darkEl = DocumentRe.getElementById("dark", Webapi.Dom.document);
+    switch (self.state.isDarkMode, lightEl, darkEl) {
+      | (true, Some(light), Some(dark)) => {
+        ElementRe.remove(light);
+        self.state.lightStyleEl := Some(light);
+        self.state.darkStyleEl := Some(dark);
+      }
+      | (false, Some(light), Some(dark)) => {
+        ElementRe.remove(dark);
+        self.state.lightStyleEl := Some(light);
+        self.state.darkStyleEl := Some(dark);
+      }
+      | (_, _, _) => ()
+    }
   },
 
   willUnmount: self => {
@@ -105,6 +129,37 @@ let make = (~content, _children) => {
       self.state.keyDownHandler^,
       DocumentRe.asEventTarget(Webapi.Dom.document)
     );
+  },
+
+  didUpdate: ({ newSelf }) => {
+    let lightEl = DocumentRe.getElementById("light", Webapi.Dom.document);
+    let darkEl = DocumentRe.getElementById("dark", Webapi.Dom.document);
+    let bodyEl = DocumentRe.querySelector("body", Webapi.Dom.document);
+    switch (newSelf.state.isDarkMode, newSelf.state.lightStyleEl^, newSelf.state.darkStyleEl^, lightEl, darkEl, bodyEl) {
+      | (true, _, Some(dark), None, None, Some(body)) => {
+        ElementRe.appendChild(dark, body);
+      }
+      | (true, _, Some(_dark), None, Some(_currDark), _) => ()
+      | (true, _, Some(dark), Some(currLight), None, Some(body)) => {
+        ElementRe.remove(currLight);
+        ElementRe.appendChild(dark, body);
+      }
+      | (true, _, Some(_dark), Some(currLight), Some(_currDark), _) => {
+        ElementRe.remove(currLight);
+      }
+      | (false, Some(light), _, None, None, Some(body)) => {
+        ElementRe.appendChild(light, body);
+      }
+      | (false, Some(_light), _, Some(_currLight), None, _) => ()
+      | (false, Some(light), _, None, Some(currDark), Some(body)) => {
+        ElementRe.remove(currDark);
+        ElementRe.appendChild(light, body);
+      }
+      | (false, Some(_light), _, Some(_currLight), Some(currDark), _) => {
+        ElementRe.remove(currDark);
+      }
+      | (_, _, _, _, _, _) => ()
+    }
   },
 
   reducer: (action, state) =>

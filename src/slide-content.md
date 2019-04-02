@@ -10,7 +10,7 @@
 ---
 
 ---
-```
+```nohighlight
 Cannot read property '____' of undefined
 ```
 ---
@@ -34,18 +34,18 @@ Inferred
 ---
 ### Types in action
 
-```
+```reasonml
 type name = string;
 ```
 
-```
+```reasonml
 let firstName: name = "Tian";
 ```
 
 ---
 ### Variants
 
-```
+```reasonml
 type loginStatus = 
   | NotLoggedIn
   | LoggedIn(string)
@@ -54,7 +54,7 @@ type loginStatus =
 ---
 ### Pattern matching (1)
 
-```
+```reasonml
 let status = LoggedIn("tian");
 …
 …
@@ -67,7 +67,7 @@ let status = LoggedIn("tian");
 
 ### Pattern matching (1)
 
-```
+```reasonml
 let status = LoggedIn("tian");
 switch (status) {
   …
@@ -80,7 +80,7 @@ switch (status) {
 
 ### Pattern matching (1)
 
-```
+```reasonml
 let status = LoggedIn("tian");
 switch (status) {
   | NotLoggedIn => ":("
@@ -93,7 +93,7 @@ switch (status) {
 
 ### Pattern matching (1)
 
-```
+```reasonml
 let status = LoggedIn("tian");
 switch (status) {
   | NotLoggedIn => ":("
@@ -106,7 +106,7 @@ switch (status) {
 
 ### Pattern matching (1)
 
-```
+```reasonml
 let status = LoggedIn("tian");
 switch (status) {
   | NotLoggedIn => ":("
@@ -118,7 +118,7 @@ switch (status) {
 ---
 ### Pattern matching (2)
 
-```
+```reasonml
 switch (someList) {
   …
   …
@@ -130,7 +130,7 @@ switch (someList) {
 
 ### Pattern matching (2)
 
-```
+```reasonml
 switch (someList) {
   | [] => "The list is empty..."
   …
@@ -142,7 +142,7 @@ switch (someList) {
 
 ### Pattern matching (2)
 
-```
+```reasonml
 switch (someList) {
   | [] => "The list is empty..."
   | [head, ...tail] => …
@@ -154,7 +154,7 @@ switch (someList) {
 
 ### Pattern matching (2)
 
-```
+```reasonml
 switch (someList) {
   | [] => "The list is empty..."
   | [head, ...tail] => head ++
@@ -165,7 +165,7 @@ switch (someList) {
 ---
 ### Pattern matching (3)
 
-```
+```reasonml
 switch (divisibleBy3, divisibleBy5) {
   | (true, true) => "Fizz Buzz"
   | (true, false) => "Fizz"
@@ -177,7 +177,7 @@ switch (divisibleBy3, divisibleBy5) {
 ---
 ### Special mention: `option`
 
-```
+```reasonml
 type option('t) = 
   | Some('t)
   | None
@@ -188,7 +188,7 @@ No more null / undefined bugs, ever! 🙌
 ---
 ### Tuples
 
-```
+```reasonml
 (1, "H", 1.008)
 (2, "He", 4.0026)
 ```
@@ -196,7 +196,7 @@ No more null / undefined bugs, ever! 🙌
 ---
 ### Records
 
-```
+```reasonml
 type conference = {
   …
   …
@@ -208,7 +208,7 @@ type conference = {
 
 ### Records
 
-```
+```reasonml
 type conference = {
   name: string,
   year: int,
@@ -219,7 +219,7 @@ type conference = {
 ---
 ### Records
 
-```
+```reasonml
 let thisConference = {
   … 
   … 
@@ -231,7 +231,7 @@ let thisConference = {
 
 ### Records
 
-```
+```reasonml
 let thisConference = {
   name: "Codemotion",
   year: 2019,
@@ -242,7 +242,7 @@ let thisConference = {
 ---
 ### Objects - closed
 
-```
+```reasonml
 type person = {
   …
   …
@@ -253,7 +253,7 @@ type person = {
 
 ### Objects - closed
 
-```
+```reasonml
 type person = {
   …
   name: string
@@ -264,7 +264,7 @@ type person = {
 
 ### Objects - closed
 
-```
+```reasonml
 type person = {
   .
   name: string
@@ -275,14 +275,14 @@ type person = {
 
 ### Objects - closed
 
-```
+```reasonml
 let author: person = {
   …
   …
 };
 ```
 
-```
+```reasonml
 …
 ```
 
@@ -290,29 +290,14 @@ let author: person = {
 
 ### Objects - closed 
 
-```
-let author: person = {
-  val age = 100;
-  …
-};
-```
-
-```
-…
-```
-
----
-
-### Objects - closed 
-
-```
+```reasonml
 let author: person = {
   val age = 100;
-  pub name = "V. Hugo";
+  …
 };
 ```
 
-```
+```reasonml
 …
 ```
 
@@ -320,21 +305,36 @@ let author: person = {
 
 ### Objects - closed 
 
-```
+```reasonml
 let author: person = {
   val age = 100;
   pub name = "V. Hugo";
 };
 ```
 
+```reasonml
+…
 ```
+
+---
+
+### Objects - closed 
+
+```reasonml
+let author: person = {
+  val age = 100;
+  pub name = "V. Hugo";
+};
+```
+
+```reasonml
 author#name
 ```
 
 ---
 ### Objects - open
 
-```
+```reasonml
 type named('t) = {
   ..
   name: string
@@ -344,7 +344,7 @@ type named('t) = {
 ---
 ### Objects - open
 
-```
+```reasonml
 let author: named({. name: string, write: string => unit}) = {
   val currentBook = ref(string);
   pub name = "Victor Hugo";
@@ -355,7 +355,7 @@ let author: named({. name: string, write: string => unit}) = {
 ---
 ### Immutability (1)
 
-```
+```reasonml
 let meaningOfLife = 42;
 let meaningOfLife = 9001;
 ```
@@ -363,7 +363,7 @@ let meaningOfLife = 9001;
 ---
 ### Immutability (2)
 
-```
+```reasonml
 let meaningOfLife = ref(42);
 meaningOfLife := 9001;
 ```
@@ -379,7 +379,7 @@ Directory structure changes? Easy!
 ---
 ### `external`
 
-```
+```reasonml
 external cStrcmp: string => int = "strcmp";
 ```
 
@@ -415,7 +415,7 @@ All you need: **bsconfig.json** and **`bsb`**
 ---
 #### Minimal bsconfig.json
 
-```
+```json
 {
   "name": "my-project",
   "sources": {
@@ -427,11 +427,11 @@ All you need: **bsconfig.json** and **`bsb`**
 ---
 #### `bsb`
 
-```
+```nohighlight
 npm install -g bs-platform
 ```
 
-```
+```nohighlight
 bsb -make-world [-w]
 ```
 
@@ -444,15 +444,15 @@ TLDR; You can already write entire JS apps in pure Reason! 🎉
 ---
 Remember `external`?
 ---
-```
+```reasonml
 external cStrcmp: string => int = "strcmp";
 ```
 
-```
+```reasonml
 [@bs.val] btoa: string => string = "btoa";
 ```
 
-```
+```reasonml
 let encodedData = btoa("Hi, Codemotion!");
 ```
 
@@ -463,7 +463,7 @@ But first, check for existing bindings!
 ---
 Add it to `bs-dependencies` in bsconfig.json:
 
-```
+```json
 {
   "name": "my-project",
   "sources": {
@@ -484,7 +484,7 @@ Otherwise, write your own:
 
 Again, the bsconfig.json:
 
-```
+```json
 {
   "name": "my-project",
   "sources": { "dir": "src" },
@@ -501,7 +501,7 @@ Again, the bsconfig.json:
 
 Again, the bsconfig.json:
 
-```
+```json
 {
   "name": "my-project",
   "sources": { "dir": "src" },
@@ -518,7 +518,7 @@ Again, the bsconfig.json:
 
 Again, the bsconfig.json:
 
-```
+```json
 {
   "name": "my-project",
   "sources": { "dir": "src" },
@@ -535,7 +535,7 @@ Again, the bsconfig.json:
 
 Again, the bsconfig.json:
 
-```
+```json
 {
   "name": "my-project",
   "sources": { "dir": "src" },
@@ -551,7 +551,7 @@ Again, the bsconfig.json:
 ---
 #### Supported module types
 
-```
+```nohighlight
 amdjs[-global]
 commonjs
 es6[-global]
