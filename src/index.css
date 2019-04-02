@@ -42,6 +42,18 @@ pre, p {
     margin: 1.5em 0 0 0;
 }
 
+/* These two rules are for selecting the first p or pre per slide
+   and removing the margin we added before, as well as the
+   user-agent margin. Not a huge fan of it as it's very tied to
+   the output of the markdown and slide component. */
+.slide-container > div:first-child p:first-child {
+    margin: 0;
+}
+
+.slide-container > div:first-child pre:first-child {
+    margin: 0;
+}
+
 pre code.hljs {
     padding: 0;
 }

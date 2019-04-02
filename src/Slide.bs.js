@@ -50,6 +50,7 @@ function make(content, currentContentIndex, _children) {
                                 }, ReasonReact.element(undefined, undefined, Markdown$ReactTemplate.make(s, /* array */[])));
                     }), content);
               return React.createElement("div", {
+                          className: "slide-container",
                           style: style
                         }, $$Array.of_list(slides));
             }),

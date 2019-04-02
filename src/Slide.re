@@ -30,7 +30,7 @@ let make = (~content: list(string), ~currentContentIndex: int, _children) => {
             List.mapi((i, s) => 
                 <div style={contentStyle(~isHidden={i > currentContentIndex})}><Markdown markdown={s} /></div>
             , content);
-        <div style>
+        <div style className="slide-container">
             {ReasonReact.array(Array.of_list(slides))}
         </div>;
     }
