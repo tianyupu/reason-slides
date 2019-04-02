@@ -1,11 +1,11 @@
 # The Reason for ReasonML
 ## Tianyu Pu
 <div style="margin: auto; height: 50%; width: 50%">
-    <img src="img/codemotion_logo_orange_white.png" />
-    <img src="img/license-cc.png" />
-    <img src="img/license-by.png" />
-    <img src="img/license-nc.png" />
-    <img src="img/license-sa.png" />
+  <img src="img/codemotion_logo_orange_white.png" />
+  <img src="img/license-cc.png" />
+  <img src="img/license-by.png" />
+  <img src="img/license-nc.png" />
+  <img src="img/license-sa.png" />
 </div>
 ---
 
@@ -16,11 +16,15 @@ Cannot read property '____' of undefined
 ---
 ![this is fine, really](img/this-is-fine.jpg)
 ---
-(logos of various libraries designed to make JS less hard)
+![2018 StackOverflow developer survey](img/developer-survey-2018.png)
 ---
-![reason](img/reason.svg)
+![es6 logo](img/es6.png)
+![flow logo](img/flow.svg)
+![typescript logo](img/typescript.svg)
 ---
-![ocaml](img/ocaml.svg)
+![reason logo](img/reason.svg)
+---
+![ocaml logo](img/ocaml.svg)
 ---
 ## 🚀 A whirlwind tour of ReasonML 🚀
 ---
@@ -167,10 +171,36 @@ switch (someList) {
 
 ```reasonml
 switch (divisibleBy3, divisibleBy5) {
-  | (true, true) => "Fizz Buzz"
-  | (true, false) => "Fizz"
-  | (false, true) => "Buzz"
-  | (false, false) => ""
+  …
+  …
+  …
+  …
+}
+```
+
+---
+
+### Pattern matching (3)
+
+```reasonml
+switch (divisibleBy3, divisibleBy5) {
+  | (true, true)    => …
+  | (true, false)   => …
+  | (false, true)   => …
+  | (false, false)  => …
+}
+```
+
+---
+
+### Pattern matching (3)
+
+```reasonml
+switch (divisibleBy3, divisibleBy5) {
+  | (true, true)    => "Fizz Buzz"
+  | (true, false)   => "Fizz"
+  | (false, true)   => "Buzz"
+  | (false, false)  => ""
 }
 ```
 
@@ -345,11 +375,131 @@ type named('t) = {
 ### Objects - open
 
 ```reasonml
-let author: named({. name: string, write: string => unit}) = {
-  val currentBook = ref(string);
-  pub name = "Victor Hugo";
-  pub write = string => currentBook := currentBook^ ++ string
+let author: named({
+  …
+  …
+  …
+}) = {
+  …
+  …
+  …
+  …
 };
+```
+
+---
+
+### Objects - open
+
+```reasonml
+let author: named({
+  .
+  name: string,
+  …
+}) = {
+  …
+  …
+  …
+  …
+};
+```
+
+---
+
+### Objects - open
+
+```reasonml
+let author: named({
+  .
+  name: string,
+  write: string => unit
+}) = {
+  …
+  …
+  …
+  …
+};
+```
+
+---
+
+### Objects - open
+
+```reasonml
+let author: named({
+  .
+  name: string,
+  write: string => unit
+}) = {
+  …
+  pub name = "V. Hugo";
+  …
+  …
+};
+```
+
+---
+
+### Objects - open
+
+```reasonml
+let author: named({
+  .
+  name: string,
+  write: string => unit
+}) = {
+  val currentBook = ref("");
+  pub name = "V. Hugo";
+  …
+  …
+};
+```
+
+---
+
+### Objects - open
+
+```reasonml
+let author: named({
+  .
+  name: string,
+  write: string => unit
+}) = {
+  val currentBook = ref("");
+  pub name = "V. Hugo";
+  pub write = string => 
+    …
+};
+```
+
+---
+
+### Objects - open
+
+```reasonml
+let author: named({
+  .
+  name: string,
+  write: string => unit
+}) = {
+  val currentBook = ref("");
+  pub name = "V. Hugo";
+  pub write = string => 
+    currentBook := currentBook^ ++ string
+};
+```
+
+---
+```reasonml
+let print_name: named('t) => unit = 
+  …
+```
+
+---
+
+```reasonml
+let print_name: named('t) => unit = 
+  n => print_endline(n#name);
 ```
 
 ---
@@ -436,7 +586,44 @@ bsb -make-world [-w]
 ```
 
 ---
-(example of compiled JS)
+```reasonml
+EventTargetRe.addKeyDownEventListener(
+  …
+  …
+);
+```
+
+---
+
+```reasonml
+EventTargetRe.addKeyDownEventListener(
+  …
+  DocumentRe.asEventTarget(Webapi.Dom.document)
+);
+```
+
+---
+
+```reasonml
+EventTargetRe.addKeyDownEventListener(
+  self.state.keyDownHandler^,
+  DocumentRe.asEventTarget(Webapi.Dom.document)
+);
+```
+
+---
+```reasonml
+EventTargetRe.addKeyDownEventListener(
+  self.state.keyDownHandler^,
+  DocumentRe.asEventTarget(Webapi.Dom.document)
+);
+```
+
+```javascript
+document.addEventListener("keydown",
+  self[/* state */1][/* keyDownHandler */2][0]);
+```
+
 ---
 TLDR; You can already write entire JS apps in pure Reason! 🎉
 ---
@@ -475,9 +662,6 @@ Add it to `bs-dependencies` in bsconfig.json:
 }
 ```
 
----
-Otherwise, write your own:
-(examples)
 ---
 ### Using Reason in JS
 ---
@@ -558,8 +742,6 @@ es6[-global]
 ```
 
 ---
-(Migrating an existing file into Reason - the process)
----
 ### _Reason #2:_
 
 Smooth JS interop, thanks to BuckleScript!
@@ -578,7 +760,16 @@ Smooth JS interop, thanks to BuckleScript!
 ---
 ## Thank you!
 [linkedin.com/in/tianyupu](https://www.linkedin.com/in/tianyupu/)
+[reason-slides.surge.sh](http://reason-slides.surge.sh/)
 ---
 ## Resources
-[bs directives reference](https://github.com/moroshko/bs-blabla)
+[BS directives reference](https://github.com/moroshko/bs-blabla)
 [bsconfig schema reference](https://bucklescript.github.io/bucklescript/docson/#build-schema.json)
+[Getting started with ReasonML](http://2ality.com/2017/11/getting-started-reasonml.html)
+---
+## Credits
+[ES6 logo](https://github.com/topics/es6)
+[Flow logo](https://flow.org/)
+[TypeScript logo](https://www.typescriptlang.org/)
+[Reason logo](https://reasonml.github.io/en/)
+[OCaml logo](https://ocaml.org/)
