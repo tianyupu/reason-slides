@@ -47,174 +47,21 @@ let firstName: name = "Tian";
 ```
 
 ---
-### Variants
+### Immutability (1)
 
 ```reasonml
-type loginStatus = 
-  | NotLoggedIn
-  | LoggedIn(string)
+let meaningOfLife = 42;
+let meaningOfLife = 9001;
 ```
 
 ---
-### Pattern matching (1)
+### Immutability (2)
 
 ```reasonml
-let status = LoggedIn("tian");
-…
-…
-…
-…
-…
+let meaningOfLife = ref(42);
+meaningOfLife := 9001;
 ```
 
----
-
-### Pattern matching (1)
-
-```reasonml
-let status = LoggedIn("tian");
-switch (status) {
-  …
-  …
-  …
-}
-```
-
----
-
-### Pattern matching (1)
-
-```reasonml
-let status = LoggedIn("tian");
-switch (status) {
-  | NotLoggedIn => ":("
-  | …
-  | …
-}
-```
-
----
-
-### Pattern matching (1)
-
-```reasonml
-let status = LoggedIn("tian");
-switch (status) {
-  | NotLoggedIn => ":("
-  | LoggedIn("admin") => "!"
-  | …
-}
-```
-
----
-
-### Pattern matching (1)
-
-```reasonml
-let status = LoggedIn("tian");
-switch (status) {
-  | NotLoggedIn => ":("
-  | LoggedIn("admin") => "!"
-  | LoggedIn(user) => ":)"
-}
-```
-
----
-### Pattern matching (2)
-
-```reasonml
-switch (someList) {
-  …
-  …
-  …
-}
-```
-
----
-
-### Pattern matching (2)
-
-```reasonml
-switch (someList) {
-  | [] => "The list is empty..."
-  …
-  …
-}
-```
-
----
-
-### Pattern matching (2)
-
-```reasonml
-switch (someList) {
-  | [] => "The list is empty..."
-  | [head, ...tail] => …
-  …
-}
-```
-
----
-
-### Pattern matching (2)
-
-```reasonml
-switch (someList) {
-  | [] => "The list is empty..."
-  | [head, ...tail] => head ++
-    " is the first item"
-}
-```
-
----
-### Pattern matching (3)
-
-```reasonml
-switch (divisibleBy3, divisibleBy5) {
-  …
-  …
-  …
-  …
-}
-```
-
----
-
-### Pattern matching (3)
-
-```reasonml
-switch (divisibleBy3, divisibleBy5) {
-  | (true, true)    => …
-  | (true, false)   => …
-  | (false, true)   => …
-  | (false, false)  => …
-}
-```
-
----
-
-### Pattern matching (3)
-
-```reasonml
-switch (divisibleBy3, divisibleBy5) {
-  | (true, true)    => "Fizz Buzz"
-  | (true, false)   => "Fizz"
-  | (false, true)   => "Buzz"
-  | (false, false)  => ""
-}
-```
-
----
-### Special mention: `option`
-
-```reasonml
-type option('t) = 
-  | Some('t)
-  | None
-```
-
----
-No more null / undefined bugs, ever! 🙌
 ---
 ### Tuples
 
@@ -503,21 +350,174 @@ let print_name: named('t) => unit =
 ```
 
 ---
-### Immutability (1)
+### Variants
 
 ```reasonml
-let meaningOfLife = 42;
-let meaningOfLife = 9001;
+type loginStatus = 
+  | NotLoggedIn
+  | LoggedIn(string)
 ```
 
 ---
-### Immutability (2)
+### Pattern matching (1)
 
 ```reasonml
-let meaningOfLife = ref(42);
-meaningOfLife := 9001;
+let status = LoggedIn("tian");
+…
+…
+…
+…
+…
 ```
 
+---
+
+### Pattern matching (1)
+
+```reasonml
+let status = LoggedIn("tian");
+switch (status) {
+  …
+  …
+  …
+}
+```
+
+---
+
+### Pattern matching (1)
+
+```reasonml
+let status = LoggedIn("tian");
+switch (status) {
+  | NotLoggedIn => ":("
+  | …
+  | …
+}
+```
+
+---
+
+### Pattern matching (1)
+
+```reasonml
+let status = LoggedIn("tian");
+switch (status) {
+  | NotLoggedIn => ":("
+  | LoggedIn("admin") => "!"
+  | …
+}
+```
+
+---
+
+### Pattern matching (1)
+
+```reasonml
+let status = LoggedIn("tian");
+switch (status) {
+  | NotLoggedIn => ":("
+  | LoggedIn("admin") => "!"
+  | LoggedIn(user) => ":)"
+}
+```
+
+---
+### Pattern matching (2)
+
+```reasonml
+switch (someList) {
+  …
+  …
+  …
+}
+```
+
+---
+
+### Pattern matching (2)
+
+```reasonml
+switch (someList) {
+  | [] => "The list is empty..."
+  …
+  …
+}
+```
+
+---
+
+### Pattern matching (2)
+
+```reasonml
+switch (someList) {
+  | [] => "The list is empty..."
+  | [head, ...tail] => …
+  …
+}
+```
+
+---
+
+### Pattern matching (2)
+
+```reasonml
+switch (someList) {
+  | [] => "The list is empty..."
+  | [head, ...tail] => head ++
+    " is the first item"
+}
+```
+
+---
+### Pattern matching (3)
+
+```reasonml
+switch (divisibleBy3, divisibleBy5) {
+  …
+  …
+  …
+  …
+}
+```
+
+---
+
+### Pattern matching (3)
+
+```reasonml
+switch (divisibleBy3, divisibleBy5) {
+  | (true, true)    => …
+  | (true, false)   => …
+  | (false, true)   => …
+  | (false, false)  => …
+}
+```
+
+---
+
+### Pattern matching (3)
+
+```reasonml
+switch (divisibleBy3, divisibleBy5) {
+  | (true, true)    => "Fizz Buzz"
+  | (true, false)   => "Fizz"
+  | (false, true)   => "Buzz"
+  | (false, false)  => ""
+}
+```
+
+---
+### Special mention: `option`
+
+```reasonml
+type option('t) = 
+  | Some('t)
+  | None
+```
+
+---
+No more null / undefined bugs, ever! 🙌
 ---
 ### Modules
 
@@ -663,6 +663,8 @@ Add it to `bs-dependencies` in bsconfig.json:
 ```
 
 ---
+Don't forget package.json!
+---
 ### Using Reason in JS
 ---
 
@@ -762,14 +764,18 @@ Smooth JS interop, thanks to BuckleScript!
 [linkedin.com/in/tianyupu](https://www.linkedin.com/in/tianyupu/)
 [reason-slides.surge.sh](http://reason-slides.surge.sh/)
 ---
-## Resources
-[BS directives reference](https://github.com/moroshko/bs-blabla)
-[bsconfig schema reference](https://bucklescript.github.io/bucklescript/docson/#build-schema.json)
+## Some great resources
 [Getting started with ReasonML](http://2ality.com/2017/11/getting-started-reasonml.html)
+[OCaml for the skeptical](https://www2.lib.uchicago.edu/keith/ocaml-class/home.html)
+[BuckleScript user manual](https://bucklescript.github.io/bucklescript/Manual.html)
+[BuckleScript directives reference](https://github.com/moroshko/bs-blabla)
+[bsconfig schema reference](https://bucklescript.github.io/bucklescript/docson/#build-schema.json)
 ---
 ## Credits
+[This is fine](https://www.theverge.com/2016/5/5/11592622/this-is-fine-meme-comic)
 [ES6 logo](https://github.com/topics/es6)
 [Flow logo](https://flow.org/)
 [TypeScript logo](https://www.typescriptlang.org/)
 [Reason logo](https://reasonml.github.io/en/)
 [OCaml logo](https://ocaml.org/)
+[StackOverflow Developer Survey](https://insights.stackoverflow.com/survey/2018/#technology)
