@@ -530,7 +530,7 @@ Directory structure changes? Easy!
 ### `external`
 
 ```reasonml
-external cStrcmp: string => int = "strcmp";
+external cStrcmp: string => string => int = "strcmp";
 ```
 
 ---
@@ -632,7 +632,7 @@ TLDR; You can already write entire JS apps in pure Reason! 🎉
 Remember `external`?
 ---
 ```reasonml
-external cStrcmp: string => int = "strcmp";
+external cStrcmp: string => string => int = "strcmp";
 ```
 
 ```reasonml
