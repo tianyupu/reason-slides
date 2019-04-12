@@ -30,7 +30,7 @@ fetch("slide-content.md").then((function (prim) {
                             }
                           }), slideArray));
         })).then((function (slideContent) {
-        return Promise.resolve(ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Slides$ReactTemplate.make(slideContent, /* array */[])), "index1"));
+        return Promise.resolve(ReactDOMRe.renderToElementWithId(ReasonReact.element(undefined, undefined, Slides$ReactTemplate.make(slideContent, /* array */[])), "index"));
       }));
 
 exports.slideSeparator = slideSeparator;

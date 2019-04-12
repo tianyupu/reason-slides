@@ -11,5 +11,5 @@ Js.Promise.(
                         [slide] :
                         Array.to_list(Js.String.split(slideContentSeparator, slide)), slideArray) 
     |> resolve)
-  |> then_(slideContent => ReactDOMRe.renderToElementWithId(<Slides content={slideContent} />, "index1") |> resolve)
+  |> then_(slideContent => ReactDOMRe.renderToElementWithId(<Slides content={slideContent} />, "index") |> resolve)
 );

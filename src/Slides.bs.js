@@ -123,7 +123,7 @@ function make(content, _children) {
                     case "c" : 
                         return Curry._1(self[/* send */3], /* ToggleDarkMode */2);
                     case "f" : 
-                        var match$1 = document.getElementById("index1");
+                        var match$1 = document.getElementById("index");
                         if (match$1 == null) {
                           return /* () */0;
                         } else {
