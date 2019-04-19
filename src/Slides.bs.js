@@ -12,6 +12,7 @@ var Caml_primitive = require("bs-platform/lib/js/caml_primitive.js");
 var Caml_js_exceptions = require("bs-platform/lib/js/caml_js_exceptions.js");
 var Slide$ReactTemplate = require("./Slide.bs.js");
 var Caml_builtin_exceptions = require("bs-platform/lib/js/caml_builtin_exceptions.js");
+var SlideControls$ReactTemplate = require("./SlideControls.bs.js");
 
 (( require("tianyupu-highlight.js/styles/solarized-dark.css") ));
 
@@ -71,36 +72,6 @@ function style(isDarkMode) {
           overflow: "hidden",
           position: "relative",
           width: "100%"
-        };
-}
-
-var controlsStyle = {
-  bottom: "20px",
-  position: "fixed",
-  right: "10px"
-};
-
-function leftControlStyle(isDarkMode) {
-  return {
-          backgroundColor: "transparent",
-          border: "12px solid transparent",
-          borderRightColor: isDarkMode ? "#839496" : "#657b83",
-          borderRightWidth: "22px",
-          cursor: "pointer",
-          margin: "0 5px 0 5px",
-          padding: "0"
-        };
-}
-
-function rightControlStyle(isDarkMode) {
-  return {
-          backgroundColor: "transparent",
-          border: "12px solid transparent",
-          borderLeftColor: isDarkMode ? "#839496" : "#657b83",
-          borderLeftWidth: "22px",
-          cursor: "pointer",
-          margin: "0 5px 0 5px",
-          padding: "0"
         };
 }
 
@@ -247,22 +218,14 @@ function make(content, _children) {
           /* render */(function (self) {
               var match = self[/* state */1];
               var isDarkMode = match[/* isDarkMode */3];
-              var slideContents = List.nth(content, self[/* state */1][/* currentSlide */0]);
+              var slideContents = List.nth(content, match[/* currentSlide */0]);
               return React.createElement("div", {
                           style: style(isDarkMode)
-                        }, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, self[/* state */1][/* currentSlideContent */1], /* array */[])), React.createElement("aside", {
-                              style: controlsStyle
-                            }, React.createElement("button", {
-                                  style: leftControlStyle(isDarkMode),
-                                  onClick: (function (_event) {
-                                      return Curry._1(self[/* send */3], /* PreviousSlide */0);
-                                    })
-                                }), React.createElement("button", {
-                                  style: rightControlStyle(isDarkMode),
-                                  onClick: (function (_event) {
-                                      return Curry._1(self[/* send */3], /* NextSlide */1);
-                                    })
-                                })));
+                        }, ReasonReact.element(undefined, undefined, Slide$ReactTemplate.make(slideContents, match[/* currentSlideContent */1], /* array */[])), ReasonReact.element(undefined, undefined, SlideControls$ReactTemplate.make(isDarkMode ? "#839496" : "#657b83", (function (param) {
+                                    return Curry._1(self[/* send */3], /* PreviousSlide */0);
+                                  }), (function (param) {
+                                    return Curry._1(self[/* send */3], /* NextSlide */1);
+                                  }), /* array */[])));
             }),
           /* initialState */(function (param) {
               return /* record */[
@@ -401,8 +364,5 @@ exports.component = component;
 exports.backgroundColor = backgroundColor;
 exports.contentColor = contentColor;
 exports.style = style;
-exports.controlsStyle = controlsStyle;
-exports.leftControlStyle = leftControlStyle;
-exports.rightControlStyle = rightControlStyle;
 exports.make = make;
 /*  Not a pure module */

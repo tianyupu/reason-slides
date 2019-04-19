@@ -45,34 +45,6 @@ let style = isDarkMode => ReactDOMRe.Style.make(
     ()
 );
 
-let controlsStyle = ReactDOMRe.Style.make(
-    ~position="fixed",
-    ~right="10px",
-    ~bottom="20px",
-    ()
-);
-
-let leftControlStyle = isDarkMode => ReactDOMRe.Style.make(
-    ~borderRightColor=contentColor(isDarkMode),
-    ~borderRightWidth="22px",
-    ~padding="0",
-    ~backgroundColor="transparent",
-    ~border="12px solid transparent",
-    ~cursor="pointer",
-    ~margin="0 5px 0 5px",
-    ()
-);
-let rightControlStyle = isDarkMode => ReactDOMRe.Style.make(
-    ~borderLeftColor=contentColor(isDarkMode),
-    ~borderLeftWidth="22px",
-    ~padding="0",
-    ~backgroundColor="transparent",
-    ~border="12px solid transparent",
-    ~cursor="pointer",
-    ~margin="0 5px 0 5px",
-    ()
-);
-
 let make = (~content, _children) => {
   ...component,
 
@@ -210,15 +182,14 @@ let make = (~content, _children) => {
     },
 
   render: self => {
-    let { isDarkMode } = self.state;
+    let { isDarkMode, currentSlide, currentSlideContent } = self.state;
     let slideContents: list(string) = 
-      List.nth(content, self.state.currentSlide);
+      List.nth(content, currentSlide);
     <div style={style(isDarkMode)}>
-      <Slide content={slideContents} currentContentIndex={self.state.currentSlideContent} />
-      <aside style={controlsStyle}>
-        <button onClick={_event => self.send(PreviousSlide)} style={leftControlStyle(isDarkMode)}></button>
-        <button onClick={_event => self.send(NextSlide)} style={rightControlStyle(isDarkMode)}></button>
-      </aside>
+      <Slide content={slideContents} currentContentIndex={currentSlideContent} />
+      <SlideControls controlsColor={contentColor(isDarkMode)}
+                     prevCallback={() => self.send(PreviousSlide)}
+                     nextCallback={() => self.send(NextSlide)} />
     </div>;
   },
 };
