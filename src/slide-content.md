@@ -1,12 +1,6 @@
 # The Reason for ReasonML
-## Tianyu Pu
-<div style="margin: auto; height: 50%; width: 50%">
-  <img src="img/codemotion_logo_orange_white.png" />
-  <img src="img/license-cc.png" />
-  <img src="img/license-by.png" />
-  <img src="img/license-nc.png" />
-  <img src="img/license-sa.png" />
-</div>
+**Tianyu (Tian) Pu**
+[@tianyupu](https://www.twitter.com/tianyupu)
 ---
 
 ---
@@ -28,6 +22,60 @@ Cannot read property '____' of undefined
 ---
 ## 🚀 A whirlwind tour of ReasonML 🚀
 ---
+…
+…
+…
+…
+
+---
+
+Basics
+…
+…
+…
+
+---
+
+Basics
+Data structures
+…
+…
+
+---
+
+Basics
+Data structures
+Pattern matching
+…
+
+---
+
+Basics
+Data structures
+Pattern matching
+Extras
+
+---
+
+➡️ Basics
+Data structures
+Pattern matching
+Extras
+
+---
+### (Im)mutability
+
+```reasonml
+let meaningOfLife = 42;
+let meaningOfLife = 9001;
+```
+
+```reasonml
+let meaningOfLife = ref(42);
+meaningOfLife := 9001;
+```
+
+---
 ### Types
 
 100% coverage
@@ -47,20 +95,17 @@ let firstName: name = "Tian";
 ```
 
 ---
-### Immutability (1)
-
-```reasonml
-let meaningOfLife = 42;
-let meaningOfLife = 9001;
-```
+➡️ Basics
+Data structures
+Pattern matching
+Extras
 
 ---
-### Immutability (2)
 
-```reasonml
-let meaningOfLife = ref(42);
-meaningOfLife := 9001;
-```
+✅ Basics
+➡️ Data structures
+Pattern matching
+Extras
 
 ---
 ### Tuples
@@ -110,9 +155,9 @@ let thisConference = {
 
 ```reasonml
 let thisConference = {
-  name: "Codemotion",
+  name: "FrontConf",
   year: 2019,
-  location: "AMS"
+  location: "Munich"
 };
 ```
 
@@ -350,6 +395,19 @@ let print_name: named('t) => unit =
 ```
 
 ---
+✅ Basics
+➡️ Data structures
+Pattern matching
+Extras
+
+---
+
+✅ Basics
+✅️ Data structures
+➡️ Pattern matching
+Extras
+
+---
 ### Variants
 
 ```reasonml
@@ -508,7 +566,7 @@ switch (divisibleBy3, divisibleBy5) {
 ```
 
 ---
-### Special mention: `option`
+### Special mention
 
 ```reasonml
 type option('t) = 
@@ -518,6 +576,19 @@ type option('t) =
 
 ---
 No more null / undefined bugs, ever! 🙌
+---
+✅ Basics
+✅ Data structures
+➡️ Pattern matching
+Extras
+
+---
+
+✅ Basics
+✅️ Data structures
+✅ Pattern matching
+➡️ Extras
+
 ---
 ### Modules
 
@@ -534,11 +605,52 @@ external cStrcmp: string => string => int = "strcmp";
 ```
 
 ---
+✅ Basics
+✅️ Data structures
+✅ Pattern matching
+➡️ Extras
+
+---
+
+✅ Basics
+✅️ Data structures
+✅ Pattern matching
+✅ Extras
+
+---
 ### _Reason #1:_
 
 The language! ✨
 ---
 ## But, JavaScript?!?!
+
+---
+…
+…
+…
+
+---
+Reason & JS
+…
+…
+
+---
+
+Reason & JS
+JS in Reason
+…
+
+---
+
+Reason & JS
+JS in Reason
+Reason in JS
+
+---
+
+➡️ Reason & JS
+JS in Reason
+Reason in JS
 
 ---
 ReasonML != JavaScript
@@ -627,7 +739,16 @@ document.addEventListener("keydown",
 ---
 TLDR; You can already write entire JS apps in pure Reason! 🎉
 ---
-### Using JS libraries in Reason
+➡️ Reason & JS
+JS in Reason
+Reason in JS
+
+---
+
+✅ Reason & JS
+➡️ JS in Reason
+Reason in JS
+
 ---
 Remember `external`?
 ---
@@ -640,7 +761,7 @@ external cStrcmp: string => string => int = "strcmp";
 ```
 
 ```reasonml
-let encodedData = btoa("Hi, Codemotion!");
+let encodedData = btoa("Hi, FrontConf!");
 ```
 
 ---
@@ -663,11 +784,19 @@ Add it to `bs-dependencies` in bsconfig.json:
 ```
 
 ---
-Don't forget package.json!
+**Don't forget package.json!**
 ---
-### Using Reason in JS
+✅ Reason & JS
+➡️ JS in Reason
+Reason in JS
+
 ---
 
+✅ Reason & JS
+✅ JS in Reason
+➡️ Reason in JS
+
+---
 Again, the bsconfig.json:
 
 ```json
@@ -744,9 +873,20 @@ es6[-global]
 ```
 
 ---
+✅ Reason & JS
+✅ JS in Reason
+➡️ Reason in JS
+
+---
+
+✅ Reason & JS
+✅ JS in Reason
+✅ Reason in JS
+
+---
 ### _Reason #2:_
 
-Smooth JS interop, thanks to BuckleScript!
+Smooth JS interop 👌
 ---
 ## Questions?
 
@@ -761,7 +901,7 @@ Smooth JS interop, thanks to BuckleScript!
 
 ---
 ## Thank you!
-[linkedin.com/in/tianyupu](https://www.linkedin.com/in/tianyupu/)
+[@tianyupu](https://www.twitter.com/tianyupu)
 [reason-slides.surge.sh](http://reason-slides.surge.sh/)
 ---
 ## Some great resources
