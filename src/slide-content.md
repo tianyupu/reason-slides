@@ -698,45 +698,6 @@ bsb -make-world [-w]
 ```
 
 ---
-```reasonml
-EventTargetRe.addKeyDownEventListener(
-  …
-  …
-);
-```
-
----
-
-```reasonml
-EventTargetRe.addKeyDownEventListener(
-  …
-  DocumentRe.asEventTarget(Webapi.Dom.document)
-);
-```
-
----
-
-```reasonml
-EventTargetRe.addKeyDownEventListener(
-  self.state.keyDownHandler^,
-  DocumentRe.asEventTarget(Webapi.Dom.document)
-);
-```
-
----
-```reasonml
-EventTargetRe.addKeyDownEventListener(
-  self.state.keyDownHandler^,
-  DocumentRe.asEventTarget(Webapi.Dom.document)
-);
-```
-
-```javascript
-document.addEventListener("keydown",
-  self[/* state */1][/* keyDownHandler */2][0]);
-```
-
----
 TLDR; You can already write entire JS apps in pure Reason! 🎉
 ---
 ➡️ Reason & JS
