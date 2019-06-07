@@ -1018,7 +1018,7 @@ Call to action
 ➡️ Call to action
 
 ---
-### Let's code!
+### Knowledge is power
 
 Write a new Reason file
 
