@@ -1073,4 +1073,5 @@ Interop
 [TypeScript logo](https://www.typescriptlang.org/)
 [Reason logo](https://reasonml.github.io/en/)
 [OCaml logo](https://ocaml.org/)
+[Elm logo](https://commons.wikimedia.org/wiki/File:Elm_logo.svg)
 [StackOverflow Developer Survey](https://insights.stackoverflow.com/survey/2018/#technology)
