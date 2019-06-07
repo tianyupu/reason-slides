@@ -10,15 +10,103 @@ Cannot read property '____' of undefined
 ---
 ![this is fine, really](img/this-is-fine.jpg)
 ---
+## ?
+---
 ![2018 StackOverflow developer survey](img/developer-survey-2018.png)
 ---
 ![es6 logo](img/es6.png)
+---
+
+```javascript
+var log = function (s) {
+  …
+}
+
+…
+…
+…
+```
+
+---
+
+```javascript
+var log = function (s) {
+  // do stuff
+}
+
+…
+…
+…
+```
+
+---
+
+```javascript
+var log = function (s) {
+  // do stuff
+}
+
+const log = s => {
+…
+}
+```
+
+---
+
+```javascript
+var log = function (s) {
+  // do stuff
+}
+
+const log = s => {
+  // do stuff
+}
+```
+
+---
+But also:
 ![flow logo](img/flow.svg)
 ![typescript logo](img/typescript.svg)
+![elm logo](img/elm.svg)
 ---
 ![reason logo](img/reason.svg)
 ---
+## What is Reason?
+
+
 ![ocaml logo](img/ocaml.svg)
+---
+```nohighlight
+OCaml compiler 
+```
+
+---
+
+```nohighlight
+                ----> …
+               /
+OCaml compiler 
+               \
+                ----> …
+```
+
+---
+
+```nohighlight
+                ----> frontend
+               /
+OCaml compiler 
+               \
+                ----> backend
+```
+---
+## Why Reason?
+
+Accessible to JS devs ⏳
+
+Interop with existing code ⏳
+
+Fast compilation to JS
 ---
 ## 🚀 A whirlwind tour of ReasonML 🚀
 ---
@@ -108,6 +196,13 @@ Pattern matching
 Extras
 
 ---
+### Lists
+
+```reasonml
+["Redfern", "Burwood", "Strathfield"]
+```
+
+---
 ### Tuples
 
 ```reasonml
@@ -155,9 +250,9 @@ let thisConference = {
 
 ```reasonml
 let thisConference = {
-  name: "FrontConf",
+  name: "LambdaConf",
   year: 2019,
-  location: "Munich"
+  location: "Boulder"
 };
 ```
 
@@ -618,19 +713,26 @@ external cStrcmp: string => string => int = "strcmp";
 ✅ Extras
 
 ---
-### _Reason #1:_
 
-The language! ✨
+## Why Reason?
+
+Accessible to JS devs ❤️
+
+Interop with existing code ⏳
+
+Fast compilation to JS
 ---
-## But, JavaScript?!?!
+## The interop story
 
 ---
+…
 …
 …
 …
 
 ---
 Reason & JS
+…
 …
 …
 
@@ -638,6 +740,7 @@ Reason & JS
 
 Reason & JS
 JS in Reason
+…
 …
 
 ---
@@ -645,23 +748,30 @@ JS in Reason
 Reason & JS
 JS in Reason
 Reason in JS
+…
+
+---
+
+Reason & JS
+JS in Reason
+Reason in JS
+Call to action
 
 ---
 
 ➡️ Reason & JS
 JS in Reason
 Reason in JS
+Call to action
 
 ---
-ReasonML != JavaScript
----
-ReasonML == OCaml
----
-OCaml → native code
----
-OCaml → JavaScript!
----
-How? 🤔
+```nohighlight
+                ----> frontend
+               /
+OCaml compiler 
+               \
+                ----> backend
+```
 ---
 <img width="150px"
      src="img/bucklescript.svg"
@@ -672,6 +782,8 @@ How? 🤔
 1 Reason file → 1 JS file
 
 Use the JS files as normal
+
+JS files are human-readable!
 ---
 All you need: **bsconfig.json** and **`bsb`**
 ---
@@ -698,20 +810,28 @@ bsb -make-world [-w]
 ```
 
 ---
+```nohighlight
+my-project/
+  src/
+  package.json
+  bsconfig.json
+```
+
+---
 TLDR; You can already write entire JS apps in pure Reason! 🎉
 ---
 ➡️ Reason & JS
 JS in Reason
 Reason in JS
+Call to action
 
 ---
 
 ✅ Reason & JS
 ➡️ JS in Reason
 Reason in JS
+Call to action
 
----
-Remember `external`?
 ---
 ```reasonml
 external cStrcmp: string => string => int = "strcmp";
@@ -722,15 +842,67 @@ external cStrcmp: string => string => int = "strcmp";
 ```
 
 ```reasonml
-let encodedData = btoa("Hi, FrontConf!");
+let encodedData = btoa("Hi, LambdaConf!");
 ```
 
 ---
-But first, check for existing bindings!
+```reasonml
+[@bs.module]
+…
+…
+…
+```
+
+---
+
+```reasonml
+[@bs.module]
+[@bs.scope]
+…
+…
+```
+
+---
+
+```reasonml
+[@bs.module]
+[@bs.scope]
+[@bs.new]
+…
+```
+
+---
+
+```reasonml
+[@bs.module]
+[@bs.scope]
+[@bs.new]
+[@bs.unwrap]
+```
+
+---
+...and more!
+---
+But first, check for existing bindings:
 ---
 ![redex.github.io](img/redex.png)
 ---
 Add it to `bs-dependencies` in bsconfig.json:
+---
+
+```json
+{
+  "name": "my-project",
+  "sources": {
+    "dir": "src"
+  },
+  …
+  …
+  …
+}
+```
+
+---
 
 ```json
 {
@@ -745,17 +917,17 @@ Add it to `bs-dependencies` in bsconfig.json:
 ```
 
 ---
-**Don't forget package.json!**
----
 ✅ Reason & JS
 ➡️ JS in Reason
 Reason in JS
+Call to action
 
 ---
 
 ✅ Reason & JS
 ✅ JS in Reason
 ➡️ Reason in JS
+Call to action
 
 ---
 Again, the bsconfig.json:
@@ -828,7 +1000,6 @@ Again, the bsconfig.json:
 #### Supported module types
 
 ```nohighlight
-amdjs[-global]
 commonjs
 es6[-global]
 ```
@@ -837,23 +1008,45 @@ es6[-global]
 ✅ Reason & JS
 ✅ JS in Reason
 ➡️ Reason in JS
+Call to action
 
 ---
 
 ✅ Reason & JS
 ✅ JS in Reason
 ✅ Reason in JS
+➡️ Call to action
 
 ---
-### _Reason #2:_
+### Let's code!
 
-Smooth JS interop 👌
+Write a new Reason file
+
+Convert existing files
+
+💸
+---
+
+## Why Reason?
+
+Accessible to JS devs ❤️
+
+Interop with existing code 🔄
+
+Fast compilation to JS
 ---
 ## Questions?
 
 ---
 ## Recap
 
+JS
+
+Reason & OCaml
+
+Reason language
+
+Interop
 ---
 ## The end
 
@@ -871,6 +1064,7 @@ Smooth JS interop 👌
 [BuckleScript user manual](https://bucklescript.github.io/bucklescript/Manual.html)
 [BuckleScript directives reference](https://github.com/moroshko/bs-blabla)
 [bsconfig schema reference](https://bucklescript.github.io/bucklescript/docson/#build-schema.json)
+[ReasonML vs TypeScript](https://news.ycombinator.com/item?id=16315351)
 ---
 ## Credits
 [This is fine](https://www.theverge.com/2016/5/5/11592622/this-is-fine-meme-comic)
