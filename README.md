@@ -5,12 +5,12 @@ A talk on the ReasonML programming language.
 This talk has been given at:
 
 * Codemotion Amsterdam 2019
+* FrontConf Munich 2019
+* LambdaConf 2019 (Boulder, Colorado, USA)
 
 Planned talks:
 
-* FrontConf Munich 2019
-* LambdaConf 2019
-
+* LambdaWorld Cádiz 2019
 
 ## Run Project
 

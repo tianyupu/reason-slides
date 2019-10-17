@@ -250,9 +250,9 @@ let thisConference = {
 
 ```reasonml
 let thisConference = {
-  name: "LambdaConf",
+  name: "LambdaWorld",
   year: 2019,
-  location: "Boulder"
+  location: "Cádiz"
 };
 ```
 
@@ -842,7 +842,7 @@ external cStrcmp: string => string => int = "strcmp";
 ```
 
 ```reasonml
-let encodedData = btoa("Hi, LambdaConf!");
+let encodedData = btoa("Hi, LambdaWorld!");
 ```
 
 ---
