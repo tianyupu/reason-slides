@@ -164,6 +164,12 @@ meaningOfLife := 9001;
 ```
 
 ---
+```reasonml
+  // Example: app state definition
+  keyDownHandler: ref(Dom.keyboardEvent => unit),
+```
+
+---
 ### Types
 
 100% coverage
@@ -250,9 +256,41 @@ let thisConference = {
 
 ```reasonml
 let thisConference = {
-  name: "LambdaConf",
+  name: "LambdaWorld",
   year: 2019,
-  location: "Boulder"
+  location: "Cádiz"
+};
+```
+
+---
+```reasonml
+// Example: app state definition
+…
+  …
+  keyDownHandler: ref(Dom.keyboardEvent => unit),
+  …
+…
+```
+
+---
+
+```reasonml
+// Example: app state definition
+type state = {
+  …
+  keyDownHandler: ref(Dom.keyboardEvent => unit),
+  …
+};
+```
+
+---
+
+```reasonml
+// Example: app state definition
+type state = {
+  currentSlide: int,
+  keyDownHandler: ref(Dom.keyboardEvent => unit),
+  isDarkMode: bool,
 };
 ```
 
@@ -490,6 +528,13 @@ let print_name: named('t) => unit =
 ```
 
 ---
+List, tuple, record, object (Reason) 🤔
+
+vs
+
+Array, object (JS) 😵
+
+---
 ✅ Basics
 ➡️ Data structures
 Pattern matching
@@ -509,6 +554,15 @@ Extras
 type loginStatus = 
   | NotLoggedIn
   | LoggedIn(string)
+```
+
+---
+```reasonml
+type action =
+  | PreviousSlide
+  | NextSlide
+  | GoToSlide(int, int)
+  | ToggleDarkMode
 ```
 
 ---
@@ -623,6 +677,49 @@ switch (someList) {
 ```
 
 ---
+```reasonml
+// Example: slide routing
+switch (pathSegments) {
+  | [|"#", a, b|] => …
+    …
+  | _ => …
+}
+```
+
+---
+
+```reasonml
+// Example: slide routing
+switch (pathSegments) {
+  | [|"#", a, b|] => self.send(
+    …
+  | _ => …
+}
+```
+
+---
+
+```reasonml
+// Example: slide routing
+switch (pathSegments) {
+  | [|"#", a, b|] => self.send(
+    GoToSlide(int_of_string(a), int_of_string(b)))
+  | _ => …
+}
+```
+
+---
+
+```reasonml
+// Example: slide routing
+switch (pathSegments) {
+  | [|"#", a, b|] => self.send(
+    GoToSlide(int_of_string(a), int_of_string(b)))
+  | _ => self.send(GoToSlide(0, 0))
+}
+```
+
+---
 ### Pattern matching (3)
 
 ```reasonml
@@ -667,6 +764,53 @@ switch (divisibleBy3, divisibleBy5) {
 type option('t) = 
   | Some('t)
   | None
+```
+
+---
+```reasonml
+// Example: fullscreen logic
+switch (DocumentRe.getElementById(
+  "index", Webapi.Dom.document
+)) {
+  | …
+  | …
+}
+```
+
+---
+
+```reasonml
+// Example: fullscreen logic
+switch (DocumentRe.getElementById(
+  "index", Webapi.Dom.document
+)) {
+  | Some(el) => el …
+  | …
+}
+```
+
+---
+
+```reasonml
+// Example: fullscreen logic
+switch (DocumentRe.getElementById(
+  "index", Webapi.Dom.document
+)) {
+  | Some(el) => el |> ElementRe.requestFullscreen
+  | …
+}
+```
+
+---
+
+```reasonml
+// Example: fullscreen logic
+switch (DocumentRe.getElementById(
+  "index", Webapi.Dom.document
+)) {
+  | Some(el) => el |> ElementRe.requestFullscreen
+  | None => ()
+}
 ```
 
 ---
@@ -842,7 +986,7 @@ external cStrcmp: string => string => int = "strcmp";
 ```
 
 ```reasonml
-let encodedData = btoa("Hi, LambdaConf!");
+let encodedData = btoa("Hi, LambdaWorld!");
 ```
 
 ---
@@ -882,6 +1026,18 @@ let encodedData = btoa("Hi, LambdaConf!");
 
 ---
 ...and more!
+
+---
+```reasonml
+[@bs.module "highlight.js"] external highlightBlock:
+  Dom.element => unit = "highlightBlock";
+```
+
+```reasonml
+[@bs.new] [@bs.module "showdown"]
+  external showdownConverter: converter = "Converter";
+```
+
 ---
 But first, check for existing bindings:
 ---
@@ -1034,8 +1190,6 @@ Accessible to JS devs ❤️
 Interop with existing code 🔄
 
 Fast compilation to JS
----
-## Questions?
 
 ---
 ## Recap
@@ -1054,7 +1208,7 @@ Interop
 ## The ~~end~~ beginning
 
 ---
-## Thank you!
+## Thank you! ❤️
 [@tianyupu](https://www.twitter.com/tianyupu)
 [reason-slides.surge.sh](http://reason-slides.surge.sh/)
 ---
