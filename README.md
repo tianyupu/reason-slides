@@ -1,5 +1,27 @@
 # reason-slides
 
+**
+I'm sorry, I couldn't get in touch with you any other way.
+
+Hi 😊
+
+My name is Dima Prokofyev.
+I will be very glad if you help me in my endeavor.
+
+I'm going to launch my Open Source project on GitHub and would like the organization there to be called "Knowledge Map". More precisely, GitHub renames it to "Knowledge-Map" when creating it.
+
+This organization name belongs to you.
+https://github.com/knowledge-map
+
+And there hasn't been a lot of activity since 2014 (sorry if that).
+
+Can I ask you to rename the organization on GitHub to a different name so that I can use it?
+
+It is designed to structure the scientific knowledge of all mankind about health and to defeat aging.
+
+It would be great if the brand was similar everywhere. Although I'm not big enough to think about it right now. I would be very grateful to you.
+**
+
 A talk on the ReasonML programming language.
 
 This talk has been given at:
